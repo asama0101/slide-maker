@@ -12,6 +12,6 @@ allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUG
 1. `python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" doctor` を実行する。
 2. 終了コード 0 なら、出力の行を項目ごとに伝える。
    - `[OK]`: 一言で済ませる。
-   - `[情報]`: 版の行。最新でないとき（「→」の行がある）は、更新の手順を伝える。
+   - `[情報]`: プラグインのバージョンの行。最新でないとき（「→」の行がある）は、更新の手順を伝える。
    - `[任意]`: BIZ UDPゴシック未導入。PowerPoint で折り返しがずれることがあるだけで、使わなくても動く。
 3. 終了コード 3 は、`[NG]` がある（OS・実行環境・保存先、または専用の仮想環境がない・足りない）。出力の `[NG]` の項目と、「→」の対処を伝える。導入（`setup --yes`）は、利用者に「`${CLAUDE_PLUGIN_DATA}` の下に専用の仮想環境と chromium（数百 MB）を入れてよいか」を確かめ、承認を得てから実行する。
