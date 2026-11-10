@@ -2,7 +2,7 @@
 name: doctor
 description: slide-maker が動く環境かを点検し、インストール中の版が最新かを確かめる。専用の仮想環境・ライブラリ・chromium・BIZ UDPゴシックの有無と、GitHub をマーケットプレイスに登録していれば新しい版の有無を、項目ごとに伝える。「環境を点検して」「doctor」「最新版か確認して」「動かない原因を調べて」と頼まれたときに使う。資料の作成には使わない（create）。Windows 専用。
 compatibility: Windows 専用。Python 3.10 以上。
-allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" *)'
+allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" doctor)'
 ---
 
 # slide-maker doctor

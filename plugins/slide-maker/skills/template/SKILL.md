@@ -2,7 +2,7 @@
 name: template
 description: 利用者の PowerPoint テンプレート（.potx / .pptx）を、名前を付けて置き場に登録し、一覧を見る、消す。登録したテンプレートは、create で資料を作るとき、名前で選べる。「テンプレートを登録したい」「テンプレートの一覧を見たい」「登録したテンプレートを消したい」と頼まれたときに使う。資料の作成には使わない（create）。Windows 専用。
 compatibility: Windows 専用。create と同じ環境（Python・python-pptx）。
-allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" *)'
+allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" template-list) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" template-import *) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" template-remove *)'
 ---
 
 # slide-maker template

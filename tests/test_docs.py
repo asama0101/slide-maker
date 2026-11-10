@@ -40,24 +40,32 @@ def test_スキルの_frontmatter_はスキル名と一致する(name):
     assert m.group(1).strip() == name
 
 
-_RUN_PY_TOOL = 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" *)'
+_RUN_PY = 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" '
+# スキルごとに許す run.py のサブコマンド。広い許可（run.py *）は書かない。`setup --yes` は承認が要るので許可に入れない。
+_SUBCOMMANDS = {
+    "create": [
+        "doctor", "template-list", "init *", "lint-script *", "review-page *", "finalize *", "build *", "clean *",
+    ],
+    "doctor": ["doctor"],
+    "template": ["template-list", "template-import *", "template-remove *"],
+}
 _ARTIFACT_SKILLS = ("create",)  # 案の選択に Artifact を使うスキル
 _FRONTEND_DESIGN_TOOL = "Skill(frontend-design:frontend-design)"  # 自由設計の案を考えるときに呼ぶスキル（create だけ）
 
 
 @pytest.mark.parametrize("name", SKILL_NAMES)
-def test_allowed_tools_は_run_py_の呼び出しと_artifact_だけに絞る(name):
-    """`Bash(python *)` のような広い許可は書かない。Artifact を使うスキルだけ Artifact・ArtifactData・
+def test_allowed_tools_は_サブコマンドごとの_run_py_と_artifact_だけに絞る(name):
+    """`run.py *` のような広い許可は書かない。Artifact を使うスキルだけ Artifact・ArtifactData・
     ArtifactComments を許す。"""
     head = skill_text(name).split("\n---\n", 1)[0]
     m = re.search(r"^allowed-tools: '(.+)'$", head, re.M)
     assert m, f"{name}: allowed-tools がない"
     want = [
-        _RUN_PY_TOOL,
+        *(f"{_RUN_PY}{sub})" for sub in _SUBCOMMANDS[name]),
         *(["Artifact", "ArtifactData", "ArtifactComments"] if name in _ARTIFACT_SKILLS else []),
         *([_FRONTEND_DESIGN_TOOL] if name == "create" else []),
     ]
-    assert m.group(1).split(", ") == want
+    assert re.findall(r"Bash\([^)]*\)|[A-Za-z]+\([^)]*\)|[A-Za-z]+", m.group(1)) == want
 
 
 @pytest.mark.parametrize("key", ["name", "version", "description", "license", "repository", "keywords"])
