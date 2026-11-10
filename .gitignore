@@ -15,7 +15,7 @@ __pycache__/
 .claude/worktrees/
 .claude/settings.local.json
 
-# 設計・計画の作業用文書（superpowers・grill-form が作る。配布しない）
+# 設計・計画の作業用文書（superpowers・spec-interview が作る。配布しない）
 docs/superpowers/
 docs/specs/
 grill-specs/
