@@ -2,7 +2,7 @@
 name: create
 description: テーマ・素材・原稿から、コンサルテイストの承認資料（稟議・提案・計画・障害報告）を新しく作る。設計図と原稿(Markdown)を書く → スライドの案を非公開の Artifact に並べて選んでもらう → 編集可能な PowerPoint(.pptx) の順に進める（作成後の直しは PowerPoint で行う）。登録した PPTX テンプレート（表紙・本文・裏表紙のレイアウト、ヘッダー・フッター）の上に作れる。「スライドを作って」「資料を作って」「PowerPoint を作って」「稟議資料」「提案資料」「デッキ」と頼まれたとき、または型にハマらない図（NW 構成図・トラフィックフロー・障害動作・自己紹介・画面への注釈）を「図にして」「構成図を作って」と頼まれたときに使う。図は SVG の絵として貼る（中身は PowerPoint で直せない）。既存の PPTX の編集には使わない。Windows 専用。
 compatibility: Windows 専用。Python 3.10 以上と Claude Code。専用の仮想環境で動く。案を考えるときに frontend-design スキルを使う（なくても動く）。案の選択に Artifact（claude.ai の非公開のページ）を使う。LibreOffice は使わない。
-allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" *), Artifact, ArtifactData, ArtifactComments, Skill(frontend-design:frontend-design)'
+allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" doctor) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" template-list) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" init *) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" lint-script *) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" review-page *) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" finalize *) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" build *) Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" clean *) Artifact ArtifactData ArtifactComments Skill(frontend-design:frontend-design)'
 ---
 
 # slide-maker

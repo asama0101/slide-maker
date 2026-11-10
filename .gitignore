@@ -18,9 +18,6 @@ __pycache__/
 # 設計・計画の作業用文書（superpowers・grill-form が作る。配布しない）
 docs/superpowers/
 docs/specs/
-docs/development.md
 grill-specs/
 
-# 個人用の Claude Code 指示書（公開しない）
-CLAUDE.md
 CLAUDE.local.md
