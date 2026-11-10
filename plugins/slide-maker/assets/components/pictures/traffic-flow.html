@@ -1,0 +1,53 @@
+<!-- 用途: 構成図の上に通信の経路を矢印で重ねる絵（トラフィックフロー）。ゾーン（領域）ごとに機器を置き、番号付きの矢印で通信の順番を示す。想定外の経路だけ強調色の破線（目立たせたい点だけ）。
+     絵（pp-picture）は 1 枚の画像として PPTX に貼られ、PowerPoint では直せない。題・ヘッドメッセージ・チャートタイトル・注釈は編集できる文字。直すときは Claude に頼んで描き直す。
+     差し替える所: ゾーンの枠と名前・機器（<use href="#i-…">。使う <symbol> を <defs> に写す。assets/pictures/parts.svg）・機器の名前・矢印と番号・想定外の経路・data-alt（絵の内容を 1〜2 文）・注釈。
+     守ること: 絵の中の色は sv-f-*・sv-s-* のクラスだけ。文字は 20px（15pt）以上。番号の丸は文字 20px。収まらないときは図を分けるか、番号だけにして説明を凡例に出す。 -->
+<section class="slide" data-layout="diagram" data-type="traffic-flow">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px;font-size:37px">通信経路</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;font-size:27px;line-height:1.35">通信は FW から LB を経て社内へ入るが、Web から DB への直接接続だけは想定外で、遮断が必要である</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px;font-size:19px">利用者から DB までの通信経路（想定の 5 経路と、想定外の 1 経路。DMZ・社内のゾーン別）</div>
+  <div class="pp-picture" data-alt="利用者からインターネット、DMZ の FW・LB・Web、社内の AP・DB へ、番号 1 から 5 の矢印で通信が流れる構成図。Web から DB へ直接つながる想定外の経路が、強調色の破線で描かれている。" style="left:64px;top:224px;width:1152px;height:366px">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1152 366" font-size="20">
+      <defs>
+        <marker id="m-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="sv-f-accent"/></marker>
+        <marker id="m-emph" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="sv-f-emph"/></marker>
+        <symbol id="i-user" viewBox="0 0 64 64"><circle cx="32" cy="20" r="11" class="sv-f-mid"/><path d="M10 58 Q10 34 32 34 Q54 34 54 58 Z" class="sv-f-accent"/></symbol>
+        <symbol id="i-fw" viewBox="0 0 64 64"><rect x="6" y="10" width="52" height="44" rx="2" class="sv-f-accent"/><path d="M6 24.7 H58 M6 39.3 H58 M22 10 V24.7 M42 10 V24.7 M32 24.7 V39.3 M14 24.7 V39.3 M50 24.7 V39.3 M22 39.3 V54 M42 39.3 V54" class="sv-f-none sv-s-white" stroke-width="2.5"/></symbol>
+        <symbol id="i-lb" viewBox="0 0 64 64"><circle cx="10" cy="32" r="6" class="sv-f-dark"/><path d="M16 32 L46 12 M16 32 L46 32 M16 32 L46 52" class="sv-f-none sv-s-accent" stroke-width="3.5"/><circle cx="52" cy="12" r="6" class="sv-f-accent"/><circle cx="52" cy="32" r="6" class="sv-f-accent"/><circle cx="52" cy="52" r="6" class="sv-f-accent"/></symbol>
+        <symbol id="i-server" viewBox="0 0 64 64"><rect x="10" y="6" width="44" height="16" rx="2" class="sv-f-accent"/><rect x="10" y="24" width="44" height="16" rx="2" class="sv-f-accent"/><rect x="10" y="42" width="44" height="16" rx="2" class="sv-f-accent"/><circle cx="18" cy="14" r="2.5" class="sv-f-white"/><circle cx="18" cy="32" r="2.5" class="sv-f-white"/><circle cx="18" cy="50" r="2.5" class="sv-f-white"/><rect x="30" y="12" width="18" height="4" class="sv-f-white"/><rect x="30" y="30" width="18" height="4" class="sv-f-white"/><rect x="30" y="48" width="18" height="4" class="sv-f-white"/></symbol>
+        <symbol id="i-db" viewBox="0 0 64 64"><path d="M12 14 V50 A20 8 0 0 0 52 50 V14 Z" class="sv-f-accent"/><ellipse cx="32" cy="14" rx="20" ry="8" class="sv-f-light"/><path d="M12 28 A20 8 0 0 0 52 28" class="sv-f-none sv-s-white" stroke-width="2.5"/><path d="M12 40 A20 8 0 0 0 52 40" class="sv-f-none sv-s-white" stroke-width="2.5"/></symbol>
+      </defs>
+      <!-- ゾーン -->
+      <rect x="8" y="8" width="172" height="350" rx="8" class="sv-f-soft sv-s-line" stroke-width="2" stroke-dasharray="10 6"/>
+      <rect x="230" y="8" width="430" height="350" rx="8" class="sv-f-soft sv-s-line" stroke-width="2" stroke-dasharray="10 6"/>
+      <rect x="710" y="8" width="434" height="350" rx="8" class="sv-f-soft sv-s-line" stroke-width="2" stroke-dasharray="10 6"/>
+      <text x="22" y="36" font-weight="700">インターネット</text>
+      <text x="244" y="36" font-weight="700">DMZ</text>
+      <text x="724" y="36" font-weight="700">社内</text>
+      <!-- 機器 -->
+      <use href="#i-user" x="58" y="134" width="72" height="72"/><text x="94" y="236" text-anchor="middle">利用者</text>
+      <use href="#i-fw" x="254" y="134" width="72" height="72"/><text x="290" y="236" text-anchor="middle">FW</text>
+      <use href="#i-lb" x="409" y="134" width="72" height="72"/><text x="445" y="236" text-anchor="middle">LB</text>
+      <use href="#i-server" x="564" y="134" width="72" height="72"/><text x="600" y="236" text-anchor="middle">Web</text>
+      <use href="#i-server" x="764" y="134" width="72" height="72"/><text x="800" y="236" text-anchor="middle">AP</text>
+      <use href="#i-db" x="1014" y="134" width="72" height="72"/><text x="1050" y="236" text-anchor="middle">DB</text>
+      <!-- 想定の経路（番号順） -->
+      <path d="M134 170 H250" class="sv-f-none sv-s-accent" stroke-width="4" marker-end="url(#m-acc)"/>
+      <path d="M330 170 H405" class="sv-f-none sv-s-accent" stroke-width="4" marker-end="url(#m-acc)"/>
+      <path d="M485 170 H560" class="sv-f-none sv-s-accent" stroke-width="4" marker-end="url(#m-acc)"/>
+      <path d="M640 170 H760" class="sv-f-none sv-s-accent" stroke-width="4" marker-end="url(#m-acc)"/>
+      <path d="M840 170 H1010" class="sv-f-none sv-s-accent" stroke-width="4" marker-end="url(#m-acc)"/>
+      <g class="sv-f-dark" font-size="20" font-weight="700" text-anchor="middle">
+        <circle cx="192" cy="140" r="16"/><circle cx="368" cy="140" r="16"/><circle cx="523" cy="140" r="16"/><circle cx="700" cy="140" r="16"/><circle cx="925" cy="140" r="16"/>
+      </g>
+      <g class="sv-f-white" font-weight="700" text-anchor="middle">
+        <text x="192" y="147">1</text><text x="368" y="147">2</text><text x="523" y="147">3</text><text x="700" y="147">4</text><text x="925" y="147">5</text>
+      </g>
+      <!-- 想定外の経路（強調色。目立たせたい点だけ） -->
+      <path d="M600 130 C600 30 1050 30 1050 130" class="sv-f-none sv-s-emph" stroke-width="4" stroke-dasharray="12 7" marker-end="url(#m-emph)"/>
+      <text x="825" y="104" text-anchor="middle" font-weight="700" class="sv-f-emph">想定外: Web から DB へ直接接続</text>
+    </svg>
+  </div>
+  <div class="pp-text" data-part="注釈" data-note="注：番号は通信の順番。想定外の経路が見つかった根拠と、含意" data-role="caption" style="left:64px;top:598px;width:1152px;height:48px;font-size:16px">注: 1〜5 は想定の通信の順番、破線は想定外の経路（xx 件の接続を確認）<br>→ DB への入口を AP だけに絞れば、Web から DB への経路は遮断でき、被害の拡大を防げる</div>
+</section>

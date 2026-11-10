@@ -1,0 +1,92 @@
+/* slide-maker 基本 CSS。1 スライド = 1280×720px（13.33×7.5in）。1px = 0.75pt。 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #E5E5E5; padding: 24px 0; color: var(--text);
+  font-family: 'BIZ UDPGothic', 'BIZ UDPゴシック', 'BIZ UDGothic', 'Yu Gothic', 'Meiryo', sans-serif;
+}
+.slide {
+  position: relative; width: 1280px; height: 720px; margin: 0 auto 24px; overflow: hidden;
+  background-color: var(--bg); background-size: 1280px 720px; background-repeat: no-repeat;
+}
+.slide { color: var(--text); }
+.pp-text, .pp-shape, .pp-line, .pp-image, .pp-table, .pp-chart, .pp-picture { position: absolute; }
+/* 絵（pp-picture）: インライン SVG を 1 枚の画像にして PPTX に貼る。色はテーマの変数だけ。下のクラスで塗る */
+.pp-picture > svg { display: block; width: 100%; height: 100%; }
+.pp-picture > svg { font-family: inherit; fill: var(--text); }    /* 文字の既定色。g や text に sv-f-* を付ければ上書きされる（子へ継承） */
+.sv-f-accent { fill: var(--accent); }  .sv-f-dark { fill: var(--accent-dark); }  .sv-f-mid { fill: var(--accent-mid); }
+.sv-f-light { fill: var(--accent-light); }  .sv-f-soft { fill: var(--bg-soft); }  .sv-f-emph { fill: var(--emphasis); }
+.sv-f-white { fill: #FFFFFF; }  .sv-f-text { fill: var(--text); }  .sv-f-sub { fill: var(--text-sub); }  .sv-f-none { fill: none; }
+.sv-s-accent { stroke: var(--accent); }  .sv-s-dark { stroke: var(--accent-dark); }  .sv-s-line { stroke: var(--line); }
+.sv-s-text { stroke: var(--text); }  .sv-s-emph { stroke: var(--emphasis); }  .sv-s-sub { stroke: var(--text-sub); }
+.sv-s-white { stroke: #FFFFFF; }
+.pp-text { font-size: var(--fs-body, 19px); line-height: 1.5; color: var(--text); }
+.pp-text ul { list-style: none; }
+.pp-text li { margin-bottom: 6px; }
+.pp-line { height: 2px; }
+table.pp-table { border-collapse: collapse; color: var(--text); }
+
+/* 役割ごとの文字（px。pt = px × 0.75） */
+[data-role="title"]   { font-size: var(--fs-title, 37px); font-weight: 700; line-height: 1.35; color: var(--text); }
+[data-role="lead"]    { font-size: var(--fs-lead, 27px); color: var(--text); }
+[data-role="body"]    { font-size: var(--fs-body, 19px); color: var(--text); }
+[data-role="caption"] { font-size: var(--fs-caption, 16px); color: var(--text-sub); }
+[data-role="display"] { font-size: var(--fs-cover-title, 40px); font-weight: 700; color: var(--text); }
+[data-role="subhead"] { font-size: var(--fs-subhead, 22px); font-weight: 700; color: var(--text); }
+/* ヘッドメッセージの帯: 1 行のときも帯の縦中央に置く。PPTX の文字枠は測った文字の位置に置かれるので、ここで中央にすれば PPTX も同じ位置になる */
+[data-part="ヘッドメッセージ"][data-role="lead"] { display: flex; flex-direction: column; justify-content: center; }
+
+/* テンプレートの位置に合わせる（theme.css の変数） */
+[data-role="title"]:not([data-ph]) { left: var(--title-x); top: var(--title-y); width: var(--title-w); }
+[data-ph="title"]    { left: var(--cover-title-x); top: var(--cover-title-y); width: var(--cover-title-w);
+                       font-size: var(--fs-cover-title, 40px); font-weight: 700; color: var(--text); }
+.slide[data-layout="closing"] [data-ph="title"] { left: var(--closing-title-x); top: var(--closing-title-y); width: var(--closing-title-w); }
+[data-ph="subtitle"] { left: var(--cover-subtitle-x); top: var(--cover-subtitle-y); width: var(--cover-subtitle-w);
+                       font-size: var(--fs-cover-sub, 22px); color: var(--text-sub); }
+.area { position: absolute; left: var(--area-x); top: var(--area-y); width: var(--area-w); height: var(--area-h); }
+
+.pp-text li::before { content: "• "; }          /* プレビューの箇条書きの印（PPTX では本物の箇条書き） */
+
+/* 面の色 */
+.f-accent { background: var(--accent); }
+.f-dark   { background: var(--accent-dark); }
+.f-mid    { background: var(--accent-mid); }
+.f-light  { background: var(--accent-light); }
+.f-soft   { background: var(--bg-soft); }
+.f-emph   { background: var(--emphasis); }
+.f-white  { background: #FFFFFF; border: 1px solid var(--line); }
+.r { border-radius: 2px; }
+/* 図形の形（PPTX では本物の楕円・三角形になる。プレビューの近似） */
+.pp-shape[data-shape="ellipse"] { border-radius: 50%; }
+.pp-shape[data-shape="triangle"] { clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+
+/* 文字の色・形 */
+.t-white  { color: #FFFFFF; }
+.t-accent { color: var(--accent); }
+.t-emph   { color: var(--emphasis); }
+.t-sub    { color: var(--text-sub); }
+.center { text-align: center; }
+.right  { text-align: right; }
+.b      { font-weight: 700; }
+.num    { font-size: calc(44px * var(--num-scale, 1)); font-weight: 700; line-height: 1.2; color: var(--accent); }
+.t-dark { color: var(--accent-dark); }          /* 基調色の文字は白地だけ。薄い面の上は濃い基調色（.num と併用） */
+
+/* 矢印（data-arrow="end"）の矢じり。向きは chart-preview.js が ah/av（横/縦）・rv（逆向き）を付ける。PPTX では本物の矢印になる */
+.pp-line[data-arrow]::after { content: ""; position: absolute; width: 0; height: 0; border-style: solid; }
+.pp-line.ah::after { right: -2px; top: -6px; border-width: 7px 0 7px 12px; border-color: transparent transparent transparent var(--ac); }
+.pp-line.ah.rv::after { left: -2px; right: auto; border-width: 7px 12px 7px 0; border-color: transparent var(--ac) transparent transparent; }
+.pp-line.av::after { bottom: -2px; left: -6px; border-width: 12px 7px 0 7px; border-color: var(--ac) transparent transparent transparent; }
+.pp-line.av.rv::after { top: -2px; bottom: auto; border-width: 0 7px 12px 7px; border-color: transparent transparent var(--ac) transparent; }
+
+/* 罫線（pp-line と併用） */
+.hr { background: var(--line); }
+
+/* 記号文法: 塗り＝実績・自社／枠線のみ＝計画・目標／濃色＝主役・淡色＝文脈 */
+.f-soft2  { background: var(--accent-soft); }
+.f-outline { background: #FFFFFF; border: 1.5px solid var(--accent); }
+/* 実線＝実績・確定／破線＝予測・計画・消える要素／点線＝補助輪郭（pp-line と併用） */
+.pp-line.dashed { background: none; border-top: 2px dashed var(--accent); height: 0; }
+.pp-line.dotted { background: none; border-top: 2px dotted var(--text-sub); height: 0; }
+/* 縦の破線・点線は vl を足す（border-left で描くので width:0。高さは style で指定） */
+.pp-line.dashed.vl { border-top: 0; border-left: 2px dashed var(--accent); width: 0; height: auto; }
+.pp-line.dotted.vl { border-top: 0; border-left: 2px dotted var(--text-sub); width: 0; height: auto; }
+.pp-shape.dashed { border: 1.5px dashed var(--accent); background: #FFFFFF; }

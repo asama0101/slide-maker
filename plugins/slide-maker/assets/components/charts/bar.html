@@ -1,0 +1,10 @@
+<!-- 用途: 案どうし・期間どうしの量の比較（縦棒）。注目する棒だけ強調色（highlight は 0 始まりの番号。配列なら複数本）。上にチャートタイトル（対象・期間・単位）、下に注（出典・前提）と「→ 含意」の 1 文。
+     差し替える所: チャートタイトル・data-chart・注釈。 -->
+<section class="slide" data-layout="chart" data-type="bar">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px">案ごとの総費用</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;line-height:1.35">B案の総費用は5年間で1.7億円と最も低く、A案より8,000万円安く収まる</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px">3案の総費用の比較（5年間の機器＋運用、万円・税抜）</div>
+  <div class="pp-chart" data-part="チャート" data-overlap data-note="グラフは全幅。注目する 1 本だけ強調色" data-chart='{"type":"bar","categories":["現状維持（C案）","A案 MPLS更新","B案 SD-WAN"],"series":[{"name":"総費用（万円）","values":[22000,25000,17000]}],"highlight":2,"fmt":"#,##0","axis":{"min":0,"max":30000,"major":10000}}' style="left:64px;top:224px;width:1152px;height:360px"></div>
+  <div class="pp-text" data-part="注釈" data-note="注：出典・前提と、グラフから言える含意" data-role="caption" style="left:64px;top:598px;width:1152px;height:42px;line-height:1.3">注: 金額は2026年9月時点の見積り（税抜）。C案はMPLSルータの保守延長5年の費用<br>→ A案との差0.8億円は、B案の運用費（年0.16億円）の5年分に相当する</div>
+</section>

@@ -1,0 +1,26 @@
+__pycache__/
+*.pyc
+*.log
+.venv/
+
+# 開発用の専用 venv の置き場（リポジトリ内に作り、コミットしない。作り方は docs/development.md）
+.dev/
+
+# テスト・lint のキャッシュ
+.pytest_cache/
+.ruff_cache/
+
+# Claude Code・superpowers の作業用フォルダ
+.superpowers/
+.claude/worktrees/
+.claude/settings.local.json
+
+# 設計・計画の作業用文書（superpowers・grill-form が作る。配布しない）
+docs/superpowers/
+docs/specs/
+docs/development.md
+grill-specs/
+
+# 個人用の Claude Code 指示書（公開しない）
+CLAUDE.md
+CLAUDE.local.md

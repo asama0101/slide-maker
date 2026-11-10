@@ -1,0 +1,63 @@
+<!-- 用途: 案の評価表（評価軸×案 → 推奨）。行に評価軸（費用・期間・停止・リスク・効果）、列に A/B/C 案を置き、各セルに ○△× の記号と数値を併記する。最下行に総合（○の数）を太字で書く。
+     見出しの行は基調色の面に白い文字。推奨する案の列は、見出しだけ強調色。目立たせたい点だけ、セルはパネル地。記号は ○＝満たす・△＝条件付き・×＝満たさない。最下部のメッセージボックスに、決めてほしいことを「〜の可否」で書く。
+     差し替える所: チャートタイトル・案の名前（3 つまで）・評価軸と要件（4〜5 行）・各セルの記号と数値（1 行に収める）・総合の行・推奨の列・論点の文。 -->
+<section class="slide" data-layout="table" data-type="options">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px">3案の評価</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;line-height:1.35">費用・期間・リスクの3軸で、要件を満たすのはB案（SD-WAN）だけである</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px">3案の評価（評価軸×案。○＝満たす、△＝条件付き、×＝満たさない）</div>
+  <table class="pp-table" data-note="評価表：行＝評価軸、列＝案。セルは記号と数値を併記し、推奨の列はパネル地" style="left:64px;top:228px;width:1152px;font-size:var(--fs-body);line-height:1.25">
+    <tr style="height:43px">
+      <td style="width:190px;padding:5px 14px;background:var(--accent);color:#FFFFFF;font-weight:700">評価軸</td>
+      <td style="width:200px;padding:5px 14px;background:var(--accent);color:#FFFFFF;font-weight:700">要件</td>
+      <td style="width:254px;padding:5px 14px;background:var(--accent);color:#FFFFFF;font-weight:700;text-align:center">A案 MPLS更新</td>
+      <td data-note="推奨する案：見出しだけ強調色。目立たせたい点だけ、セルはパネル地" style="width:254px;padding:5px 14px;background:var(--emphasis);color:#FFFFFF;font-weight:700;text-align:center">B案 SD-WAN（推奨）</td>
+      <td style="width:254px;padding:5px 14px;background:var(--accent);color:#FFFFFF;font-weight:700;text-align:center">C案 現状維持</td>
+    </tr>
+    <tr style="height:49px">
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700">総費用（5年）</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);color:var(--text-sub)">上限2.0億円</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>△</b>　2.5億円</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);background:var(--bg-soft);text-align:center;font-weight:700">○　1.7億円</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>△</b>　2.2億円</td>
+    </tr>
+    <tr style="height:49px">
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700">移行期間</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);color:var(--text-sub)">期限まで9か月</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>×</b>　12か月</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);background:var(--bg-soft);text-align:center;font-weight:700">○　6か月</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>○</b>　なし</td>
+    </tr>
+    <tr style="height:49px">
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700">拠点の通信断</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);color:var(--text-sub)">1回8時間以内</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>×</b>　3回・計24時間</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);background:var(--bg-soft);text-align:center;font-weight:700">○　1回・2時間</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>○</b>　なし</td>
+    </tr>
+    <tr style="height:49px">
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700">リスク</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);color:var(--text-sub)">戻せること</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>×</b>　大（一斉切替）</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);background:var(--bg-soft);text-align:center;font-weight:700">○　中（拠点ごとに戻せる）</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>×</b>　大（保守切れ）</td>
+    </tr>
+    <tr style="height:49px">
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700">効果（運用費）</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);color:var(--text-sub)">年▲500万円超</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>○</b>　年▲800万円</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);background:var(--bg-soft);text-align:center;font-weight:700">○　年▲800万円</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);text-align:center"><b>×</b>　0</td>
+    </tr>
+    <tr style="height:43px" data-note="総合の行：○の数で締める">
+      <td style="padding:5px 14px;border-top:2px solid var(--text);font-weight:700">総合</td>
+      <td style="padding:5px 14px;border-top:2px solid var(--text);color:var(--text-sub)">○の数</td>
+      <td style="padding:5px 14px;border-top:2px solid var(--text);text-align:center;font-weight:700">○1・△1・×3</td>
+      <td style="padding:5px 14px;border-top:2px solid var(--text);background:var(--bg-soft);text-align:center;font-weight:700;color:var(--accent-dark)">○5</td>
+      <td style="padding:5px 14px;border-top:2px solid var(--text);text-align:center;font-weight:700">○2・△1・×2</td>
+    </tr>
+  </table>
+  <div class="pp-text" data-part="注釈" data-note="注：要件（しきい値）の出所と、数値の前提" data-role="caption" style="left:64px;top:566px;width:1152px;height:24px">注: 要件は情報システム委員会で定めたしきい値。費用は2026年9月時点の見積り（税抜）、効果は現行の運用費2,000万円との差</div>
+  <div class="pp-shape f-soft" data-part="メッセージボックス" data-note="メッセージボックス：決めてほしいことを「〜の可否」で 1 行に書く" style="left:64px;top:598px;width:1152px;height:40px"></div>
+  <div class="pp-text" data-note="メッセージボックス：決めてほしいことを「〜の可否」で 1 行に書く" style="left:84px;top:599px;width:1112px;height:32px;font-size:var(--fs-body)"><b style="color:var(--accent-dark)">論点</b>　B案（SD-WAN段階移行、総費用1.7億円・6か月）を採用し、11月に設計へ進むことの可否</div>
+</section>

@@ -1,0 +1,10 @@
+<!-- 用途: 項目の大小の比較（横棒）。項目名が長いとき、または項目が多いときに、縦棒より読みやすい。主張に合う棒だけ強調色（highlight は categories の 0 始まりの番号。配列なら複数本。categories は下から上へ並ぶので、大きい順に上から見せるには値の小さい順で書く）。現行と計画の比較＋内訳も、この型で見せる。
+     差し替える所: チャートタイトル・data-chart（categories と values は下から上の順）・注釈。 -->
+<section class="slide" data-layout="chart" data-type="hbar">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px">拠点別の障害件数</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;line-height:1.35">障害の7割は、東京・大阪・名古屋の3拠点に集中しており、他の拠点は少ない</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px">拠点別の障害件数（2025年度、件）</div>
+  <div class="pp-chart" data-part="チャート" data-overlap data-note="グラフは全幅の横棒。主張に合わせて上位 3 本だけ強調色" data-chart='{"type":"barh","categories":["仙台支店","札幌支店","福岡支店","名古屋支店","大阪支社","東京本社"],"series":[{"name":"障害件数（件）","values":[9,12,18,28,36,48]}],"highlight":[3,4,5],"fmt":"#,##0","axis":{"min":0,"max":60,"major":20}}' style="left:64px;top:224px;width:1152px;height:360px"></div>
+  <div class="pp-text" data-part="注釈" data-note="注：出典・前提と、グラフから言える含意" data-role="caption" style="left:64px;top:598px;width:1152px;height:42px;line-height:1.3">注: 件数は2025年度の障害チケットの集計（全6拠点、計151件）。上位3拠点は112件で全体の74%<br>→ 監視の強化は、上位3拠点から先に進める</div>
+</section>

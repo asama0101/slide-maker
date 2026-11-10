@@ -1,0 +1,36 @@
+<!-- 用途: 自己紹介。中央に人物、周りに 4 つの吹き出し（経歴・得意・最近・好きなど）を置く。線を手描き風に揺らして、親しみのある場面にも使える（filter の wobble を外せば、きちんとした見た目になる）。
+     絵（pp-picture）は 1 枚の画像として PPTX に貼られ、PowerPoint では直せない。題・ヘッドメッセージ・チャートタイトル・注釈は編集できる文字。直すときは Claude に頼んで描き直す。
+     差し替える所: 吹き出しの見出しと文（1 行 16 字まで・2 行）・氏名（素材に無ければ xx）・強調の吹き出し（目立たせたい点だけ。ほかは基調色の線）・data-alt・注釈。素材に無い経歴・数字は作らず xx。
+     守ること: 絵の中の色は sv-f-*・sv-s-* のクラスだけ。文字は 20px（15pt）以上。吹き出しは左右・上下で同じ大きさにそろえる。 -->
+<section class="slide" data-layout="diagram" data-type="self-intro">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px;font-size:37px">自己紹介</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;font-size:27px;line-height:1.35">ネットワーク運用の経験を生かし、障害の切り分けとクラウド移行の企画に取り組んでいる</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px;font-size:19px">私について（経歴・得意なこと・最近の取り組み・好きなこと）</div>
+  <div class="pp-picture" data-alt="中央に人物のアイコンがあり、その周りに、経歴、得意、最近、好きの 4 つの吹き出しが線でつながっている自己紹介の図。最近の取り組みの吹き出しだけが強調色の枠になっている。" style="left:64px;top:224px;width:1152px;height:366px">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1152 366" font-size="20">
+      <defs>
+        <filter id="wobble" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="turbulence" baseFrequency="0.035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/></filter>
+        <symbol id="i-user" viewBox="0 0 64 64"><circle cx="32" cy="20" r="11" class="sv-f-mid"/><path d="M10 58 Q10 34 32 34 Q54 34 54 58 Z" class="sv-f-accent"/></symbol>
+      </defs>
+      <g filter="url(#wobble)">
+        <path d="M524 160 C478 160 462 84 420 84" class="sv-f-none sv-s-accent" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M524 214 C478 214 462 282 420 282" class="sv-f-none sv-s-accent" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M628 160 C674 160 690 84 732 84" class="sv-f-none sv-s-accent" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M628 214 C674 214 690 282 732 282" class="sv-f-none sv-s-accent" stroke-width="3.5" stroke-linecap="round"/>
+        <rect x="80" y="32" width="340" height="104" rx="18" class="sv-f-soft sv-s-accent" stroke-width="3"/>
+        <rect x="80" y="230" width="340" height="104" rx="18" class="sv-f-soft sv-s-accent" stroke-width="3"/>
+        <rect x="732" y="32" width="340" height="104" rx="18" class="sv-f-white sv-s-emph" stroke-width="5"/>
+        <rect x="732" y="230" width="340" height="104" rx="18" class="sv-f-soft sv-s-accent" stroke-width="3"/>
+      </g>
+      <use href="#i-user" x="516" y="108" width="120" height="120"/>
+      <text x="576" y="262" text-anchor="middle" font-weight="700">xx（氏名）</text>
+      <g font-weight="700"><text x="104" y="72">経歴</text><text x="104" y="270">得意</text><text x="756" y="72" class="sv-f-emph">最近</text><text x="756" y="270">好き</text></g>
+      <text x="104" y="108">ネットワーク運用 xx 年</text>
+      <text x="104" y="306">障害の原因の切り分け</text>
+      <text x="756" y="108">クラウド移行の企画</text>
+      <text x="756" y="306">ランニングとコーヒー</text>
+    </svg>
+  </div>
+  <div class="pp-text" data-part="注釈" data-note="注：強調は最近の取り組み 1 つだけ。経歴の年数は素材の値（無ければ xx）" data-role="caption" style="left:64px;top:598px;width:1152px;height:48px;font-size:16px">注: 経歴の年数は xx。強調の枠は、今の仕事に直結する取り組み<br>→ 運用の現場感と企画の両方を持つため、移行の計画づくりで力を発揮できる</div>
+</section>

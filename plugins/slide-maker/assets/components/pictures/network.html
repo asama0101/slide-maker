@@ -1,0 +1,51 @@
+<!-- 用途: NW 構成図（機器・回線・ゾーン）。ゾーンの枠、機器のアイコン、直角に分岐する配線、新設・変更の 1 点を強調色の破線で囲む。
+     絵（pp-picture）は 1 枚の画像として PPTX に貼られ、PowerPoint では直せない。題・ヘッドメッセージ・チャートタイトル・注釈は編集できる文字。直すときは Claude に頼んで描き直す。
+     差し替える所: ゾーンの枠と名前・機器（<use href="#i-…">。使う <symbol> を <defs> に写す。assets/pictures/parts.svg）・機器の名前・配線（M…H…V… の直角線）・強調の枠（目立たせたい点だけ）・data-alt・注釈。
+     守ること: 絵の中の色は sv-f-*・sv-s-* のクラスだけ。文字は 20px（15pt）以上。回線の種類は線種（実線・破線）と太さで区別し、色を足さない。 -->
+<section class="slide" data-layout="diagram" data-type="network">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px;font-size:37px">ネットワーク構成</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;font-size:27px;line-height:1.35">本社の出口は、ルーターの内側に FW を新設し、スイッチ配下の 3 系統を守る構成にする</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px;font-size:19px">本社ネットワークの構成（インターネットから、ルーター・FW・スイッチを経て、サーバ・DB・端末まで）</div>
+  <div class="pp-picture" data-alt="インターネットから、ルーター、新設の FW、L2 スイッチを経て、Web サーバ、AP サーバ、拠点端末の 3 系統に分岐し、AP サーバの先に DB がつながる本社ネットワークの構成図。新設の FW だけが強調色の破線で囲まれている。" style="left:64px;top:224px;width:1152px;height:366px">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1152 366" font-size="20">
+      <defs>
+        <marker id="m-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="sv-f-accent"/></marker>
+        <symbol id="i-cloud" viewBox="0 0 64 64"><path d="M17 48 A12 12 0 0 1 18 24 A16 16 0 0 1 48 26 A11 11 0 0 1 47 48 Z" class="sv-f-light sv-s-accent" stroke-width="3" stroke-linejoin="round"/></symbol>
+        <symbol id="i-router" viewBox="0 0 64 64"><rect x="6" y="32" width="52" height="20" rx="4" class="sv-f-accent"/><path d="M18 32 V12 M46 32 V12" class="sv-f-none sv-s-accent" stroke-width="4" stroke-linecap="round"/><circle cx="18" cy="10" r="4" class="sv-f-mid"/><circle cx="46" cy="10" r="4" class="sv-f-mid"/><circle cx="16" cy="42" r="3" class="sv-f-white"/><circle cx="28" cy="42" r="3" class="sv-f-white"/><circle cx="40" cy="42" r="3" class="sv-f-white"/></symbol>
+        <symbol id="i-fw" viewBox="0 0 64 64"><rect x="6" y="10" width="52" height="44" rx="2" class="sv-f-accent"/><path d="M6 24.7 H58 M6 39.3 H58 M22 10 V24.7 M42 10 V24.7 M32 24.7 V39.3 M14 24.7 V39.3 M50 24.7 V39.3 M22 39.3 V54 M42 39.3 V54" class="sv-f-none sv-s-white" stroke-width="2.5"/></symbol>
+        <symbol id="i-switch" viewBox="0 0 64 64"><rect x="4" y="22" width="56" height="24" rx="3" class="sv-f-accent"/><rect x="10" y="30" width="8" height="8" class="sv-f-white"/><rect x="21" y="30" width="8" height="8" class="sv-f-white"/><rect x="32" y="30" width="8" height="8" class="sv-f-white"/><rect x="43" y="30" width="8" height="8" class="sv-f-white"/></symbol>
+        <symbol id="i-server" viewBox="0 0 64 64"><rect x="10" y="6" width="44" height="16" rx="2" class="sv-f-accent"/><rect x="10" y="24" width="44" height="16" rx="2" class="sv-f-accent"/><rect x="10" y="42" width="44" height="16" rx="2" class="sv-f-accent"/><circle cx="18" cy="14" r="2.5" class="sv-f-white"/><circle cx="18" cy="32" r="2.5" class="sv-f-white"/><circle cx="18" cy="50" r="2.5" class="sv-f-white"/><rect x="30" y="12" width="18" height="4" class="sv-f-white"/><rect x="30" y="30" width="18" height="4" class="sv-f-white"/><rect x="30" y="48" width="18" height="4" class="sv-f-white"/></symbol>
+        <symbol id="i-pc" viewBox="0 0 64 64"><rect x="6" y="8" width="52" height="34" rx="3" class="sv-f-dark"/><rect x="10" y="12" width="44" height="26" class="sv-f-white"/><rect x="27" y="42" width="10" height="8" class="sv-f-mid"/><rect x="16" y="50" width="32" height="6" rx="2" class="sv-f-mid"/></symbol>
+        <symbol id="i-db" viewBox="0 0 64 64"><path d="M12 14 V50 A20 8 0 0 0 52 50 V14 Z" class="sv-f-accent"/><ellipse cx="32" cy="14" rx="20" ry="8" class="sv-f-light"/><path d="M12 28 A20 8 0 0 0 52 28" class="sv-f-none sv-s-white" stroke-width="2.5"/><path d="M12 40 A20 8 0 0 0 52 40" class="sv-f-none sv-s-white" stroke-width="2.5"/></symbol>
+      </defs>
+      <!-- ゾーン -->
+      <rect x="8" y="8" width="172" height="350" rx="8" class="sv-f-soft sv-s-line" stroke-width="2" stroke-dasharray="10 6"/>
+      <rect x="210" y="8" width="934" height="350" rx="8" class="sv-f-soft sv-s-line" stroke-width="2" stroke-dasharray="10 6"/>
+      <text x="22" y="36" font-weight="700">社外</text>
+      <text x="224" y="36" font-weight="700">本社ネットワーク</text>
+      <!-- 配線（直角） -->
+      <path d="M134 170 H232" class="sv-f-none sv-s-accent" stroke-width="4" marker-start="url(#m-acc)" marker-end="url(#m-acc)"/>
+      <path d="M312 170 H372" class="sv-f-none sv-s-accent" stroke-width="4" marker-start="url(#m-acc)" marker-end="url(#m-acc)"/>
+      <path d="M452 170 H512" class="sv-f-none sv-s-accent" stroke-width="4" marker-start="url(#m-acc)" marker-end="url(#m-acc)"/>
+      <path d="M592 170 H680 M680 66 V276" class="sv-f-none sv-s-accent" stroke-width="4"/>
+      <path d="M680 66 H752" class="sv-f-none sv-s-accent" stroke-width="4" marker-end="url(#m-acc)"/>
+      <path d="M680 170 H752" class="sv-f-none sv-s-accent" stroke-width="4" marker-end="url(#m-acc)"/>
+      <path d="M680 276 H752" class="sv-f-none sv-s-accent" stroke-width="4" marker-end="url(#m-acc)"/>
+      <path d="M832 170 H956" class="sv-f-none sv-s-accent" stroke-width="4" marker-start="url(#m-acc)" marker-end="url(#m-acc)"/>
+      <!-- 機器 -->
+      <use href="#i-cloud" x="62" y="134" width="72" height="72"/><text x="98" y="232" text-anchor="middle">インターネット</text>
+      <use href="#i-router" x="236" y="134" width="72" height="72"/><text x="272" y="232" text-anchor="middle">ルーター</text>
+      <use href="#i-fw" x="376" y="134" width="72" height="72"/><text x="412" y="232" text-anchor="middle">FW</text>
+      <use href="#i-switch" x="516" y="134" width="72" height="72"/><text x="552" y="232" text-anchor="middle">L2 スイッチ</text>
+      <use href="#i-server" x="756" y="30" width="72" height="72"/><text x="792" y="128" text-anchor="middle">Web サーバ</text>
+      <use href="#i-server" x="756" y="134" width="72" height="72"/><text x="792" y="232" text-anchor="middle">AP サーバ</text>
+      <use href="#i-pc" x="756" y="240" width="72" height="72"/><text x="792" y="338" text-anchor="middle">拠点端末</text>
+      <use href="#i-db" x="960" y="134" width="72" height="72"/><text x="996" y="232" text-anchor="middle">DB</text>
+      <!-- 強調（新設の FW。目立たせたい点だけ） -->
+      <rect x="364" y="122" width="96" height="124" rx="8" class="sv-f-none sv-s-emph" stroke-width="4" stroke-dasharray="12 7"/>
+      <text x="412" y="112" text-anchor="middle" font-weight="700" class="sv-f-emph">新設</text>
+    </svg>
+  </div>
+  <div class="pp-text" data-part="注釈" data-note="注：回線の種類と、強調の意味" data-role="caption" style="left:64px;top:598px;width:1152px;height:48px;font-size:16px">注: 実線は現行と同じ回線、破線の枠は今回の新設（FW 1 台）。台数・回線速度は xx<br>→ 出口に FW を 1 台足すだけで、3 系統のサーバと端末をまとめて守れ、追加の機器は最小限で済む</div>
+</section>

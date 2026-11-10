@@ -1,0 +1,10 @@
+<!-- 用途: 増減の道筋（ウォーターフォール）。使い方は 2 つ。(1) 差額の道筋: 前回の合計 → 項目ごとの増減 → 今回の合計（両端が合計。totals に最初と最後の位置を書く。見積の前回比・計画と実績の差など）。(2) 全体の分解: 合計 → 項目ごとの内訳（先頭だけ合計。totals は [0]。費用の内訳など）。totals は 0 始まりの位置。増減はどちらも灰（増加＝淡い灰、減少＝濃い灰）、合計は中間の灰で、主役の項目（highlight）だけ強調色。小さい増減のラベルは棒の外に出る。
+     差し替える所: チャートタイトル（前回と今回の時点・単位）・data-chart（values・totals・highlight。合計を合わせる）・注釈。 -->
+<section class="slide" data-layout="chart" data-type="waterfall">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px">見積の増減</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;line-height:1.35">今回の見積は前回より1,000万円低いが、差の実質は保守の計上先の変更にすぎない</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px">見積の差額の内訳（前回2026年6月 → 今回9月、万円・税抜）</div>
+  <div class="pp-chart" data-part="チャート" data-overlap data-note="滝グラフ：前回の合計 → 項目の増減 → 今回の合計。主役の 1 項目だけ強調色" data-chart='{"type":"waterfall","categories":["前回 6月","機器","設計","切替作業","保守","今回 9月"],"series":[{"name":"見積（万円）","values":[12000,600,-900,300,-1000,11000]}],"totals":[0,5],"highlight":4,"fmt":"#,##0","axis":{"min":0,"max":15000,"major":5000}}' style="left:64px;top:224px;width:1152px;height:360px"></div>
+  <div class="pp-text" data-part="注釈" data-note="注：出典・前提と、グラフから言える含意" data-role="caption" style="left:64px;top:598px;width:1152px;height:42px;line-height:1.3">注: 金額はベンダー見積（税抜）。前回は6月の概算、今回は9月の正式見積<br>→ 機器と切替の＋900は設計の▲900で相殺され、差額▲1,000は保守の計上先の変更分だ</div>
+</section>

@@ -1,0 +1,19 @@
+<!-- 用途: 全体に占める割合の比較（円）。構成が 4〜5 項目で、最大の項目を強調したいときに使う。小さい項目は「その他」にまとめ、ラベルが密集しないようにする。項目が 6 つ以上、または割合の大小を細かく比べるときは、横棒（hbar）か積み上げ（stacked）にする。強調するのは最大の 1 項目（highlight は 0 始まりの番号）だけ。凡例は円の直下に付く。
+     円は左に置き、右に読み取りのカードを置く（主張の 2 項目はパネル地、残りの項目は白地の 1 枚にまとめる）。
+     差し替える所: チャートタイトル・data-chart（categories と values）・右のカード 3 枚の見出しと文・注釈。 -->
+<section class="slide" data-layout="chart" data-type="pie">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px">障害原因の内訳</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;line-height:1.35">障害の半数は回線断が原因で、機器故障と合わせて8割を占めるため、回線対策を優先する</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px">障害原因の内訳（2025年度、件数の構成比、%）</div>
+  <div class="pp-chart" data-part="チャート" data-overlap data-note="円グラフ：最大の 1 項目だけ強調色。凡例は円の直下" data-chart='{"type":"pie","categories":["回線断","機器故障","設定ミス","その他"],"series":[{"name":"構成比（%）","values":[52,28,12,8]}],"highlight":0,"fmt":"0\"%\""}' style="left:64px;top:224px;width:640px;height:364px"></div>
+  <div class="pp-shape f-soft" data-note="読み取りのカード：主張の 2 項目をパネル地、残りを白地で 1 枚にまとめる" style="left:736px;top:224px;width:480px;height:136px"></div>
+  <div class="pp-text b" style="left:756px;top:234px;width:440px;height:32px;font-size:var(--fs-subhead)">回線断が52%</div>
+  <div class="pp-text" style="left:756px;top:270px;width:440px;height:80px;font-size:var(--fs-body);line-height:1.35">拠点の回線が切れた障害が半数。冗長化の効果が最も大きい</div>
+  <div class="pp-shape f-soft" style="left:736px;top:372px;width:480px;height:136px"></div>
+  <div class="pp-text b" style="left:756px;top:382px;width:440px;height:32px;font-size:var(--fs-subhead)">機器故障が28%</div>
+  <div class="pp-text" style="left:756px;top:418px;width:440px;height:80px;font-size:var(--fs-body);line-height:1.35">回線断と合わせて80%。<br>老朽機器の更新で減らせる</div>
+  <div class="pp-shape f-white" style="left:736px;top:520px;width:480px;height:64px"></div>
+  <div class="pp-text" style="left:756px;top:530px;width:440px;height:48px;font-size:var(--fs-body);line-height:1.35">残りは設定ミス12%とその他8%。<br>手順の標準化で防ぐ</div>
+  <div class="pp-text" data-part="注釈" data-note="注：出典・前提と、グラフから言える含意" data-role="caption" style="left:64px;top:598px;width:1152px;height:42px;line-height:1.3">注: 構成比は2025年度の障害チケット151件の原因分類（%）。その他は停電・電源と作業ミス<br>→ 対策は、回線の冗長化と機器の保守更新を優先する</div>
+</section>

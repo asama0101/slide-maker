@@ -1,0 +1,33 @@
+[project]
+name = "slide-maker"
+dynamic = ["version"]
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["plugins/slide-maker", "."]
+addopts = ["--strict-markers", "-ra"]
+xfail_strict = true
+markers = [
+    "slow: 遅いテスト（ブラウザ・PPTX 生成を実際に動かす）",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "B", "UP", "SIM", "S", "PT", "PTH", "BLE"]
+extend-select = ["PLW1514"]  # open の encoding 省略（preview のルール）
+preview = true
+explicit-preview-rules = true  # コードを指定した preview のルールだけ有効にする
+
+[tool.ruff.lint.per-file-ignores]
+# JS・CSS・HTML を文字列で埋め込んでいる。折り返すと出力が変わるので行の長さは対象にしない
+"plugins/slide-maker/pptx_deck/review_page.py" = ["E501"]
+# テスト名は日本語で書き、英語の語（PPTX・textLost など）の大文字が混ざる。N802/N803 は対象にしない
+"tests/**" = ["N802", "N803", "N806"]
+# OOXML の要素名（pPr・tblPr・tcPr・rPr）と、幅・高さ・左端の短い名前（W・H・L）をそのまま変数名にしている
+"plugins/slide-maker/pptx_deck/build.py" = ["N803", "N806"]
+"plugins/slide-maker/pptx_deck/check.py" = ["N806"]
+"plugins/slide-maker/pptx_deck/pptxutil.py" = ["N806"]
+"plugins/slide-maker/pptx_deck/template.py" = ["N806"]

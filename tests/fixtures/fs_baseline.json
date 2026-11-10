@@ -1,0 +1,18 @@
+{
+ "charts/bar.html": {},
+ "charts/hbar.html": {},
+ "charts/line.html": {},
+ "charts/pie.html": {},
+ "charts/stacked.html": {},
+ "charts/waterfall.html": {},
+ "layouts/closing.html": {},
+ "layouts/cover.html": {},
+ "layouts/text.html": {},
+ "pictures/annotate.html": {},
+ "pictures/failure.html": {},
+ "pictures/network.html": {},
+ "pictures/self-intro.html": {},
+ "pictures/traffic-flow.html": {},
+ "tables/actions.html": {},
+ "tables/options.html": {}
+}

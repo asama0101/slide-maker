@@ -1,0 +1,65 @@
+<!-- 用途: 対応一覧の表（再発防止策・課題や不具合の一覧・リスクと対策の一覧に共用）。行＝事項、列＝「事項｜内容｜期限｜担当｜状態」で、区分の帯（□ 暫定＝つなぎの手、■ 恒久＝確定して残す手）で表を分け、恒久策の承認を求める。
+     課題・不具合の一覧なら帯を重要度（高・中・低）に、リスクと対策の一覧なら列を「リスク｜影響｜対策｜残存｜担当」に読み替えて、同じ型で作る。
+     見出しの行は基調色の面に白い文字。主張（恒久策の承認）に合わせて、恒久策の帯だけ強調色の面（目立たせたい点だけ）。要になる 1 行（③）だけパネル地。最下部のメッセージボックスに、承認を「〜の可否」で書く。
+     差し替える所: チャートタイトル（障害の名前・発生日・停止時間）・区分の帯の文・行 5 つ（暫定 2・恒久 3。内容は 18 字まで）・パネル地にする行・注釈・論点の文。 -->
+<section class="slide" data-layout="table" data-type="actions">
+  <div class="pp-text" data-part="タイトル" data-role="title" style="top:36px;height:50px">再発防止策</div>
+  <div class="pp-shape f-soft" style="left:64px;top:90px;width:1152px;height:92px"></div>
+  <div class="pp-text b" data-part="ヘッドメッセージ" data-role="lead" style="left:84px;top:98px;width:1112px;height:76px;line-height:1.35">暫定策で再発を抑えつつ、恒久策の3件はSD-WAN移行の計画に組み込むべきだ</div>
+  <div class="pp-text" data-part="チャートタイトル" data-role="body" style="left:64px;top:190px;width:1152px;height:30px">本社MPLS回線断（2026年7月、停止10時間）の再発防止策（■＝恒久、□＝暫定。2026年10月時点）</div>
+  <table class="pp-table" data-note="見出しの行：基調色の面に白い文字。区分は下の帯で示すので列にしない" style="left:64px;top:224px;width:1152px;font-size:var(--fs-body);line-height:1.25">
+    <tr style="height:38px">
+      <td style="width:300px;padding:4px 14px;background:var(--accent);color:#FFFFFF;font-weight:700">対策</td>
+      <td style="width:350px;padding:4px 14px;background:var(--accent);color:#FFFFFF;font-weight:700">内容</td>
+      <td style="width:200px;padding:4px 14px;background:var(--accent);color:#FFFFFF;font-weight:700">期限</td>
+      <td style="width:140px;padding:4px 14px;background:var(--accent);color:#FFFFFF;font-weight:700">担当</td>
+      <td style="width:162px;padding:4px 14px;background:var(--accent);color:#FFFFFF;font-weight:700">状態</td>
+    </tr>
+  </table>
+  <div class="pp-shape f-soft" data-note="区分の帯：暫定（□）はパネル地、恒久（■）は強調色の面で表を分ける" style="left:64px;top:266px;width:1152px;height:32px"></div>
+  <div class="pp-text b" data-overlap style="left:78px;top:268px;width:1120px;height:28px;font-size:var(--fs-body)">□ 暫定策（つなぎの手・実施済み）</div>
+  <table class="pp-table" style="left:64px;top:298px;width:1152px;font-size:var(--fs-body);line-height:1.25">
+    <tr style="height:44px">
+      <td style="width:300px;padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700"><span style="color:var(--accent-dark)">①</span> 保守契約の短縮</td>
+      <td style="width:350px;padding:5px 14px;border-bottom:1px solid var(--line)">駆けつけ契約を4時間→2時間に短縮</td>
+      <td style="width:200px;padding:5px 14px;border-bottom:1px solid var(--line)">2026/8/31</td>
+      <td style="width:140px;padding:5px 14px;border-bottom:1px solid var(--line)">調達部</td>
+      <td style="width:162px;padding:5px 14px;border-bottom:1px solid var(--line)">完了</td>
+    </tr>
+    <tr style="height:44px">
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700"><span style="color:var(--accent-dark)">②</span> 仮設回線での手動切替</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">本社にLTEルータを仮設、手動で切替</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">2026/9/15</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">基盤G</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">完了</td>
+    </tr>
+  </table>
+  <div class="pp-shape f-emph" data-part="アクセント" data-note="恒久策の帯：承認を求める区分なので強調色の面（目立たせたい点だけ）" style="left:64px;top:388px;width:1152px;height:32px"></div>
+  <div class="pp-text b t-white" data-overlap style="left:78px;top:390px;width:1120px;height:28px;font-size:var(--fs-body)">■ 恒久策（確定して残す手・計画。今回の承認対象）</div>
+  <table class="pp-table" style="left:64px;top:422px;width:1152px;font-size:var(--fs-body);line-height:1.25">
+    <tr style="height:44px" data-note="要になる恒久策の行：パネル地の面で強調する">
+      <td style="width:300px;padding:5px 14px;background:var(--bg-soft);border-bottom:1px solid var(--line);font-weight:700"><span style="color:var(--accent-dark)">③</span> 回線の冗長化と自動切替</td>
+      <td style="width:350px;padding:5px 14px;background:var(--bg-soft);border-bottom:1px solid var(--line);font-weight:700">本社・DCを2回線＋LTEに冗長化</td>
+      <td style="width:200px;padding:5px 14px;background:var(--bg-soft);border-bottom:1px solid var(--line);font-weight:700">2027/3/31（確定）</td>
+      <td style="width:140px;padding:5px 14px;background:var(--bg-soft);border-bottom:1px solid var(--line)">基盤G</td>
+      <td style="width:162px;padding:5px 14px;background:var(--bg-soft);border-bottom:1px solid var(--line);font-weight:700">設計中</td>
+    </tr>
+    <tr style="height:44px">
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700"><span style="color:var(--accent-dark)">④</span> 全拠点の常時監視</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">48拠点を監視センターで常時監視</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">2027/4/30</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">監視C</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">計画</td>
+    </tr>
+    <tr style="height:44px">
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line);font-weight:700"><span style="color:var(--accent-dark)">⑤</span> 手順と承認の簡素化</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">復旧手順の改版と承認階層の見直し</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">2027/4/30</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">運用部門</td>
+      <td style="padding:5px 14px;border-bottom:1px solid var(--line)">計画</td>
+    </tr>
+  </table>
+  <div class="pp-text" data-part="注釈" data-note="注：暫定策の費用と、恒久策の費用の扱い" data-role="caption" style="left:64px;top:566px;width:1152px;height:24px">注: 暫定策は実施済み（費用120万円）。恒久策の費用はB案の総費用1.7億円に含む。恒久策が揃えば、同種の回線断は自動切替で2時間以内に収まる</div>
+  <div class="pp-shape f-soft" data-part="メッセージボックス" data-note="メッセージボックス：恒久策の承認を「〜の可否」で 1 行に書く" style="left:64px;top:600px;width:1152px;height:40px"></div>
+  <div class="pp-text" data-note="メッセージボックス：恒久策の承認を「〜の可否」で 1 行に書く" style="left:84px;top:603px;width:1112px;height:32px;font-size:var(--fs-body)"><b style="color:var(--accent-dark)">論点</b>　暫定策2件の継続を前提に、恒久策3件をSD-WAN移行計画の一部として承認することの可否</div>
+</section>

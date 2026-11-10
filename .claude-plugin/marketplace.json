@@ -1,0 +1,12 @@
+{
+  "name": "slide-maker",
+  "owner": { "name": "slide-maker contributors" },
+  "metadata": { "description": "ビジネス上の承認文書から編集可能な PPTX を作るプラグイン slide-maker の配布用マーケットプレイス。" },
+  "plugins": [
+    {
+      "name": "slide-maker",
+      "source": "./plugins/slide-maker",
+      "description": "素材から、PowerPoint で直せる承認文書の PPTX を作る。案は非公開の Artifact で選ぶ。Windows 専用。"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+# 行末はリポジトリ・作業ツリーとも LF に固定する（core.autocrlf の設定にかかわらず）
+* text=auto eol=lf
+
+# バイナリ
+*.potx binary
+*.pptx binary
+*.png binary
