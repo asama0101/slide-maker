@@ -2,7 +2,7 @@ import io
 import json
 
 import pytest
-from pptx_deck import update_check
+from slide_maker import update_check
 
 REPO_URL = "https://github.com/asama0101/slide-maker"
 

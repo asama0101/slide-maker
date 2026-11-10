@@ -5,7 +5,7 @@ import pytest
 from pptx import Presentation
 from pptx.oxml.ns import qn
 from pptx.util import Inches
-from pptx_deck import build
+from slide_maker import build
 
 
 def _para(size_px, lh, mb=0):

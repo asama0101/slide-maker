@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 
 import pytest
-from pptx_deck import cli, initdir, paths, review_page
+from slide_maker import cli, initdir, paths, review_page
 
 from tests._flow import write_slide
 
@@ -146,7 +146,7 @@ def _cli(capsys, *argv):
 
 @pytest.fixture
 def deck(tmp_path):
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base)
     work = paths.resolve_work(base)
     write_slide(work / "slides", "01", '<section class="slide">ONE</section>')

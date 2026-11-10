@@ -3,7 +3,7 @@
 # ruff: noqa: S101  # pytest の assert
 import pytest
 from pptx import Presentation
-from pptx_deck import build, template
+from slide_maker import build, template
 
 from tests._measure import model_of
 

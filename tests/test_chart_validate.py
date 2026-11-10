@@ -7,7 +7,7 @@ import subprocess
 import sys
 
 import pytest
-from pptx_deck import charts, initdir, paths
+from slide_maker import charts, initdir, paths
 
 from tests._paths import PKG
 
@@ -67,7 +67,7 @@ def test_add_chart_は未対応型で従来の文言の例外にする():
 
 @pytest.mark.slow
 def test_不正なグラフ指定は_build_が_traceback_を出さずエラーで止まり_pptx_を書かない(tmp_path):
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base, template_path=None, force=False, footer=None)
     work = paths.resolve_work(base)
     sec = (
@@ -81,7 +81,7 @@ def test_不正なグラフ指定は_build_が_traceback_を出さずエラー�
         encoding="utf-8",
     )
     r = subprocess.run(  # noqa: S603  # 自分の入口を sys.executable で起動する（外部入力なし）
-        [sys.executable, "-m", "pptx_deck", "build", str(base)],
+        [sys.executable, "-m", "slide_maker", "build", str(base)],
         cwd=PKG,
         capture_output=True,
         text=True,

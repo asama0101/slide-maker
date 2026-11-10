@@ -4,7 +4,7 @@
 from pathlib import Path
 
 import pytest
-from pptx_deck import build, charts, pptxutil, svgids
+from slide_maker import build, charts, pptxutil, svgids
 
 from tests._measure import model_of
 

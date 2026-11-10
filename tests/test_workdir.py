@@ -1,6 +1,6 @@
 # ruff: noqa: S101  # pytest の assert
 
-from pptx_deck import initdir, paths
+from slide_maker import initdir, paths
 
 
 def test_作業フォルダの親は出力先で_成果物名がフォルダ名になる(deck_base):

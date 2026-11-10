@@ -6,7 +6,7 @@ import re
 
 import pytest
 from pptx import Presentation
-from pptx_deck import build, paths, templatestore
+from slide_maker import build, paths, templatestore
 
 
 def test_build_は作業フォルダの外の画像を貼らない(tmp_path):
@@ -32,7 +32,7 @@ def test_テンプレート名は使えない文字と末尾のドットを弾�
 
 
 def test_予約名のテンプレートは何も置かれない(tmp_path, monkeypatch):
-    monkeypatch.setenv("PPTX_DECK_HOME", str(tmp_path / "home"))
+    monkeypatch.setenv("SLIDE_MAKER_HOME", str(tmp_path / "home"))
     prs = Presentation()
     prs.slide_width, prs.slide_height = 12192000, 6858000
     src = tmp_path / "t.pptx"
@@ -59,7 +59,7 @@ def test_add_image_はない画像を番号つきのValueErrorにする(tmp_path
 
 
 def test_build_の要素のエラーにスライド番号を付け_PPTX_を書かない(tmp_path):
-    from pptx_deck import template
+    from slide_maker import template
 
     from tests._paths import PKG
 

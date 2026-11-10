@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 import pytest
-from pptx_deck import candidates, paths
+from slide_maker import candidates, paths
 
 RUN_PY = Path(__file__).resolve().parent.parent / "plugins" / "slide-maker" / "run.py"
 

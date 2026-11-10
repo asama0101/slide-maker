@@ -2,7 +2,7 @@
 
 # ruff: noqa: S101  # pytest の assert
 import pytest
-from pptx_deck import design_colors
+from slide_maker import design_colors
 
 
 def _work(tmp_path, text):

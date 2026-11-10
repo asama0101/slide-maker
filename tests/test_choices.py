@@ -4,7 +4,7 @@
 import json
 
 import pytest
-from pptx_deck import choices
+from slide_maker import choices
 
 
 def _put(base, name, data):

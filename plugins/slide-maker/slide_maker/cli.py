@@ -309,7 +309,7 @@ def cmd_lint_script(args) -> int:
 
 
 def entry(argv: list[str]) -> int:
-    """python -m pptx_deck の入口。依存が足りない仮想環境では、traceback ではなく案内を出す。"""
+    """python -m slide_maker の入口。依存が足りない仮想環境では、traceback ではなく案内を出す。"""
     try:
         return main(argv)
     except ModuleNotFoundError as e:

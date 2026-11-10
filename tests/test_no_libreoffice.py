@@ -5,17 +5,17 @@ import json
 import re
 
 import pytest
-from pptx_deck import initdir, paths, preview
+from slide_maker import initdir, paths, preview
 
 
 def test_プラグインのコードに_soffice_がなく_render_py_もない(pkg):
-    for f in (pkg / "pptx_deck").glob("*.py"):
+    for f in (pkg / "slide_maker").glob("*.py"):
         assert "soffice" not in f.read_text(encoding="utf-8"), f.name
-    assert not (pkg / "pptx_deck" / "render.py").exists()
+    assert not (pkg / "slide_maker" / "render.py").exists()
 
 
 def test_initは単色の背景だけを作る(tmp_path):
-    base = tmp_path / "out" / "pptx-deck-source" / "d"
+    base = tmp_path / "out" / "slide-maker-source" / "d"
     initdir.init(base)
     src = paths.resolve_work(base)
     css = (src / "theme.css").read_text(encoding="utf-8")

@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 
 import pytest
-from pptx_deck import review_page
+from slide_maker import review_page
 
 PNG = b"\x89PNG\r\n\x1a\n" + bytes(range(64))
 

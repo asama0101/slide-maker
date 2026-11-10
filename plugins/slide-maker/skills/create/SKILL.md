@@ -9,7 +9,7 @@ allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" *), Artifact, Artifac
 
 承認文書を、コンサル資料のテイストで、PowerPoint で編集できる .pptx にする（16:9、BIZ UDPゴシック、無彩色＋基調 1 色＋強調 1〜2 色）。
 
-コマンドはすべて `python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" …`（`${CLAUDE_PLUGIN_ROOT}` はこのプラグインのフォルダ）。`<出力先>` は聞かず、常にカレントディレクトリ（絶対パスにして使う）。`<元データ>` は `<出力先>/pptx-deck-source/<成果物名>` で、作業フォルダの引数はすべて `"<元データ>"`。PPTX は `<出力先>/<成果物名>.pptx`。references の中の `${…}` は展開されないので、この SKILL.md の実パスに読み替える。
+コマンドはすべて `python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" …`（`${CLAUDE_PLUGIN_ROOT}` はこのプラグインのフォルダ）。`<出力先>` は聞かず、常にカレントディレクトリ（絶対パスにして使う）。`<元データ>` は `<出力先>/slide-maker-source/<成果物名>` で、作業フォルダの引数はすべて `"<元データ>"`。PPTX は `<出力先>/<成果物名>.pptx`。references の中の `${…}` は展開されないので、この SKILL.md の実パスに読み替える。
 
 ## 0. 初回だけ（環境）
 

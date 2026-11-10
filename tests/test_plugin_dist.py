@@ -45,7 +45,7 @@ def test_配布に必要なファイルが_git_管理下にある():
     missing = [f for f in DIST_FILES if f not in tracked]
     missing += [
         p.relative_to(REPO).as_posix()
-        for p in sorted((PKG / "pptx_deck").glob("*.py"))
+        for p in sorted((PKG / "slide_maker").glob("*.py"))
         if p.relative_to(REPO).as_posix() not in tracked
     ]
     assert missing == []

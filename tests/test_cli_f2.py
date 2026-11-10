@@ -9,7 +9,7 @@ import zipfile
 from pathlib import Path
 
 import pytest
-from pptx_deck import cli, initdir, lifecycle, paths
+from slide_maker import cli, initdir, lifecycle, paths
 
 from tests._flow import write_slide
 
@@ -43,7 +43,7 @@ def custom_template(dst: Path) -> Path:
 @pytest.fixture
 def base(tmp_path) -> Path:
     """標準テンプレートで init した成果物の置き場。"""
-    b = tmp_path / "out" / "pptx-deck-source" / "deck"
+    b = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(b)
     return b
 
@@ -88,7 +88,7 @@ def test_check_は存在しない_html_なら測定せず終了コード2で止�
 
 
 def test_利用者のテンプレートが消えた成果物の_force_は_template_を求めて終了コード2で止まる(tmp_path, capsys):
-    b = tmp_path / "out" / "pptx-deck-source" / "deck"
+    b = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(b, template_path=custom_template(tmp_path / "own.potx"))
     work = paths.resolve_work(b)
     assert paths.read_cfg(work)["custom_template"] is True
@@ -111,7 +111,7 @@ def test_標準テンプレートが消えた成果物の_force_は標準テン�
 
 
 def test_force_で作り直しても利用者のテンプレートの印が残り_消えたら求める(tmp_path):
-    b = tmp_path / "out" / "pptx-deck-source" / "deck"
+    b = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(b, template_path=custom_template(tmp_path / "own.potx"))
     work = paths.resolve_work(b)
     initdir.init(b, force=True)
@@ -122,7 +122,7 @@ def test_force_で作り直しても利用者のテンプレートの印が残�
 
 
 def test_標準テンプレートを明示して_init_しても利用者のテンプレート扱いにならない(tmp_path):
-    b = tmp_path / "out" / "pptx-deck-source" / "deck"
+    b = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(b, template_path=STANDARD_POTX)
     assert paths.read_cfg(paths.resolve_work(b))["custom_template"] is False
 
@@ -169,7 +169,7 @@ def test_消えた_chart_preview_js_は_ensure_derived_で作り直される(bas
     ids=["標準出力_置き場なし", "標準エラー_相対パス"],
 )
 def test_run_py_は端末が_cp932_でも標準出力と標準エラーを_UTF8_で書く(argv, stream, expected, tmp_path):
-    env = {k: v for k, v in os.environ.items() if k not in ("PPTX_DECK_HOME", "PYTHONUTF8")}
+    env = {k: v for k, v in os.environ.items() if k not in ("SLIDE_MAKER_HOME", "PYTHONUTF8")}
     env["PYTHONIOENCODING"] = "cp932"
     # S603: 自分の入口を sys.executable で起動する（外部入力なし）
     r = subprocess.run([sys.executable, str(PKG / "run.py"), *argv], capture_output=True, env=env, cwd=tmp_path)  # noqa: S603

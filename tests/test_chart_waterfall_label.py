@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 import pytest
 from pptx import Presentation
-from pptx_deck import charts
+from slide_maker import charts
 
 PAL = SimpleNamespace(accent="#00AA55", accent_mid="#55AA88", accent_dark="#005522", emphasis="#CC0000", text="#222222")
 

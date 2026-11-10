@@ -23,12 +23,12 @@ explicit-preview-rules = true  # コードを指定した preview のルール�
 
 [tool.ruff.lint.per-file-ignores]
 # JS・CSS・HTML を文字列で埋め込んでいる。折り返すと出力が変わるので行の長さは対象にしない
-"plugins/slide-maker/pptx_deck/review_page.py" = ["E501"]
+"plugins/slide-maker/slide_maker/review_page.py" = ["E501"]
 # テスト名は日本語で書き、英語の語（PPTX・textLost など）の大文字が混ざる。N802/N803 は対象にしない
 # S101 は pytest の assert
 "tests/**" = ["N802", "N803", "N806", "S101"]
 # OOXML の要素名（pPr・tblPr・tcPr・rPr）と、幅・高さ・左端の短い名前（W・H・L）をそのまま変数名にしている
-"plugins/slide-maker/pptx_deck/build.py" = ["N803", "N806"]
-"plugins/slide-maker/pptx_deck/check.py" = ["N806"]
-"plugins/slide-maker/pptx_deck/pptxutil.py" = ["N806"]
-"plugins/slide-maker/pptx_deck/template.py" = ["N806"]
+"plugins/slide-maker/slide_maker/build.py" = ["N803", "N806"]
+"plugins/slide-maker/slide_maker/check.py" = ["N806"]
+"plugins/slide-maker/slide_maker/pptxutil.py" = ["N806"]
+"plugins/slide-maker/slide_maker/template.py" = ["N806"]

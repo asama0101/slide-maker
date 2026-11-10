@@ -3,7 +3,7 @@
 # ruff: noqa: S101  # pytest の assert
 import re
 
-from pptx_deck import initdir, lifecycle
+from slide_maker import initdir, lifecycle
 
 from tests._flow import write_slide
 
@@ -53,7 +53,7 @@ def test_空のフォルダをpruneしても何も消えず落ちない(tmp_path
 
 
 def test_theme_cssに文字サイズの変数がなければensure_derivedが作り直す(tmp_path):
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(work)
     css = work / "theme.css"
     css.write_text(
@@ -66,7 +66,7 @@ def test_theme_cssに文字サイズの変数がなければensure_derivedが作
 
 
 def test_design_mdの基調色が変わるとensure_derivedがtheme_cssを作り直す(tmp_path):
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(work)
     assert lifecycle.ensure_derived(work) is False
     design = work / "design.md"
@@ -77,7 +77,7 @@ def test_design_mdの基調色が変わるとensure_derivedがtheme_cssを作り
 
 
 def test_強調色だけ変えるとensure_derivedがtheme_cssとアイコンを作り直す(tmp_path):
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(work)
     design = work / "design.md"
     design.write_text("- 基調色: #1F3A5F\n- 強調色: #B85A0B\n", encoding="utf-8")
@@ -90,7 +90,7 @@ def test_強調色だけ変えるとensure_derivedがtheme_cssとアイコンを
 
 
 def test_rules_jsonのsize_pxが変わるとensure_derivedが作り直す(tmp_path):
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(work)
     (work / "rules.json").write_text('{"lead": {"size_px": 30}}', encoding="utf-8")
     assert lifecycle.ensure_derived(work) is True

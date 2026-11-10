@@ -1,7 +1,7 @@
 """色の範囲・蛍光色・文字のコントラストの検査。ブラウザなしで動く（モデルは手で組む）。"""
 
 # ruff: noqa: S101  # pytest の assert
-from pptx_deck import check, paths, template, theme
+from slide_maker import check, paths, template, theme
 
 
 def _info():
@@ -169,7 +169,7 @@ def test_写真の上の文字はコントラストを検査しない():
 
 
 def test_明示した強調色も白地で4_5以上になる(tmp_path):
-    from pptx_deck import design_colors
+    from slide_maker import design_colors
 
     p = theme.derive("#1F3A5F", "#ED7D31")
     assert theme.contrast(p.emphasis, "#FFFFFF") >= 4.5

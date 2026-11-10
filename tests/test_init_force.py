@@ -6,7 +6,7 @@ import zipfile
 from pathlib import Path
 
 import pytest
-from pptx_deck import cli, initdir, paths
+from slide_maker import cli, initdir, paths
 
 
 def _custom_template(dst: Path) -> Path:
@@ -26,7 +26,7 @@ def _cfg(work: Path) -> dict:
 @pytest.fixture
 def deck(tmp_path):
     """独自テンプレート・フッターつきで init した作業フォルダ。(base, work, 独自テンプレートのバイト列)"""
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     tpl = _custom_template(tmp_path / "other.potx")
     initdir.init(base, template_path=tpl, footer="© 2026 A")
     work = paths.resolve_work(base)
@@ -53,7 +53,7 @@ def test_CLIのforceだけならフッター_テンプレートを保つ(deck):
 
 
 def test_新規のinitは標準テンプレート_フッターなし(tmp_path):
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base)
     work = paths.resolve_work(base)
     cfg = _cfg(work)
@@ -63,9 +63,9 @@ def test_新規のinitは標準テンプレート_フッターなし(tmp_path):
 
 
 def test_テンプレートの色が設計図に色の行がないとき基調色になる(tmp_path):
-    from pptx_deck import design_colors, template, theme
+    from slide_maker import design_colors, template, theme
 
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     r = initdir.init(work)
     cfg = paths.read_cfg(work)
     accents = template.accent_colors(work / cfg["template"])
@@ -75,9 +75,9 @@ def test_テンプレートの色が設計図に色の行がないとき基調�
 
 
 def test_旧形式の色はinit_forceで引き継がれる(tmp_path):
-    from pptx_deck import design_colors
+    from slide_maker import design_colors
 
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(work)
     (work / "design.md").unlink()
     cfg = paths.read_cfg(work)

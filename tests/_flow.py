@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from pptx_deck import candidates, cli
+from slide_maker import candidates, cli
 
 
 def write_choices(base: Path, picks: dict[str, str]) -> Path:

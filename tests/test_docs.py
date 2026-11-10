@@ -108,7 +108,7 @@ def test_スキルのパスはプラグインルート基準で実在する(f):
 
 
 def _known_commands():
-    cli_src = read(PKG / "pptx_deck" / "cli.py")
+    cli_src = read(PKG / "slide_maker" / "cli.py")
     return set(re.findall(r'sub\.add_parser\(\s*"([a-z-]+)"', cli_src)) | {"setup"}  # setup は run.py が直接処理する
 
 

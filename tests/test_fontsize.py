@@ -4,7 +4,7 @@
 import json
 
 import pytest
-from pptx_deck import fontsize, initdir, paths
+from slide_maker import fontsize, initdir, paths
 
 from tests._paths import PKG
 
@@ -34,7 +34,7 @@ def _set_fontsizes(work, values):
 
 
 def test_theme_css_has_vars(tmp_path):
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base)
     work = paths.resolve_work(base)
     css = (work / "theme.css").read_text(encoding="utf-8")
@@ -48,7 +48,7 @@ def test_theme_css_has_vars(tmp_path):
 
 
 def test_init_force_は古い_fontsizes_を引き継がない(tmp_path):
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base)
     work = paths.resolve_work(base)
     _set_fontsizes(work, {"title": 40})
@@ -76,7 +76,7 @@ def test_base_css_reads_vars():
 def test_theme_css_vars_are_inside_balanced_root(tmp_path):
     import re
 
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base)
     css = (paths.resolve_work(base) / "theme.css").read_text(encoding="utf-8")
     assert css.count("{") == css.count("}")
@@ -99,7 +99,7 @@ def browser():
 
 
 def test_chart_pt():
-    from pptx_deck import charts
+    from slide_maker import charts
 
     assert charts.chart_pt(1.0) == 12
     assert charts.chart_pt(0.84) == 10
@@ -113,11 +113,11 @@ def test_build_chart_font_ignores_stale_scale(pkg, tmp_path):
     import json
 
     from pptx import Presentation
-    from pptx_deck import build, template
+    from slide_maker import build, template
 
     from tests._measure import model_of
 
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base)
     work = paths.resolve_work(base)
     _set_fontsizes(work, {"chart-scale": 1.25})
@@ -274,11 +274,11 @@ def test_fragments_use_scale_for_num():
 def test_default_check_violations_unchanged(tmp_path):
     from collections import Counter
 
-    from pptx_deck import check, measure, template
+    from slide_maker import check, measure, template
 
     from tests._paths import REPO
 
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base)
     work = paths.resolve_work(base)
     info = template.TemplateInfo.from_dict(json.loads((work / "template.json").read_text(encoding="utf-8"))["info"])

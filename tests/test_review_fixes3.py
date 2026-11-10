@@ -4,7 +4,7 @@
 import dataclasses
 
 import pytest
-from pptx_deck import charts, check, paths, script_lint, template
+from slide_maker import charts, check, paths, script_lint, template
 
 BAND = {"x": 64.0, "y": 676.0, "w": 700.0, "h": 28.0}  # 本文レイアウトのフッターの位置
 
@@ -78,6 +78,6 @@ def test_文末が_ある_ない_のヘッドメッセージは判断語とし�
 
 # ---- ウォーターフォールの小さい増減の閾値 ----
 def test_SMALL_STEP_は_8_パーセントで_コメントもそう書く():
-    src = (paths.SKILL_DIR / "pptx_deck" / "charts.py").read_text(encoding="utf-8")
+    src = (paths.SKILL_DIR / "slide_maker" / "charts.py").read_text(encoding="utf-8")
     assert charts.SMALL_STEP == 0.08
     assert "6%" not in src

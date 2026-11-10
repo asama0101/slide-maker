@@ -3,7 +3,7 @@
 # ruff: noqa: S101  # pytest の assert
 
 import pytest
-from pptx_deck import candidates, cli, paths
+from slide_maker import candidates, cli, paths
 
 FRAG_OK = '<div class="pp-text">x</div>'
 
@@ -22,7 +22,7 @@ def browser():
 
 
 def make_slides(tmp_path, names):
-    work = tmp_path / "out" / "pptx-deck-source" / "d"
+    work = tmp_path / "out" / "slide-maker-source" / "d"
     (work / "slides").mkdir(parents=True)
     for n in names:
         (work / "slides" / n).write_text(FRAG_OK, encoding="utf-8")

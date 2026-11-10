@@ -3,7 +3,7 @@
 import tempfile
 from pathlib import Path
 
-from pptx_deck import measure
+from slide_maker import measure
 
 from tests._paths import PKG
 
