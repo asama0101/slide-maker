@@ -396,7 +396,8 @@ def test_python_が3_10_未満なら問題として報告する(monkeypatch):
 def test_doctor_は専用_venv_の置き場と実行中の_python_のパスを出す(tmp_path, monkeypatch, capsys):
     monkeypatch.setenv("SLIDE_MAKER_HOME", str(tmp_path))
     assert cli.main(["doctor"]) == 0
-    out = json.loads(capsys.readouterr().out)
-    assert out["venv"] == str(tmp_path / "venv")
-    assert out["python"] == {"path": sys.executable}
-    assert (out["warnings"] == []) == out["font_biz_udp_gothic"]  # フォントがなければ警告が出る
+    lines = capsys.readouterr().out.splitlines()
+    assert f"[OK] 仮想環境: {tmp_path / 'venv'}" in lines
+    assert f"[OK] Python: {sys.executable}" in lines
+    font = [x for x in lines if "BIZ UDPゴシック" in x][0]
+    assert font.startswith("[OK]" if cli._font_installed() else "[任意]")  # フォントがなければ任意の項目として出る

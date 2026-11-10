@@ -226,10 +226,10 @@ def diagnosis(sel: Selection) -> list[str]:
     if base:
         out += [f"[NG] 作成元の Python: {p}" for p in base]
         want = f"{MIN_PYTHON[0]}.{MIN_PYTHON[1]}"
-        out.append(f"     対処: Python {want} 以上（venv と ensurepip 付き）を入れて、そちらで run.py を実行する")
+        out.append(f"  → Python {want} 以上（venv と ensurepip 付き）を入れて、そちらで run.py を実行する")
     else:
         out.append(f"[OK] 作成元の Python {sys.version_info[0]}.{sys.version_info[1]}")
-    fix = "     対処（利用者の承認後）: `setup --yes`（専用 venv を作って導入）"
+    fix = "  → 利用者の承認後に `setup --yes`（専用 venv を作って導入）を実行する"
     if not paths.venv_python().exists():
         out += ["[NG] 仮想環境: ありません", fix]
     elif not venv_healthy():

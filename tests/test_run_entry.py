@@ -6,7 +6,6 @@ run.py は実際に子プロセスとして起動する。専用 venv は tmp_pa
 
 # ruff: noqa: S101  # pytest の assert
 import importlib.util
-import json
 import os
 import subprocess
 import sys
@@ -152,17 +151,18 @@ def test_環境変数の置き場が不正なら何もせず終了コード2(val
 def test_システムの_python_ではなく専用_venv_の_python_で_slide_maker_を実行する(good_home):
     r = run_entry("--data", str(good_home), "doctor")
     assert r.returncode == 0, text(r.stderr)
-    out = json.loads(text(r.stdout))
-    assert Path(out["python"]["path"]).samefile(good_home / "venv" / "Scripts" / "python.exe")
-    assert not Path(out["python"]["path"]).samefile(sys.executable)
-    assert out["venv"] == str(good_home / "venv")  # 置き場が子プロセスへ渡っている
+    lines = text(r.stdout).splitlines()
+    py = next(x for x in lines if x.startswith("[OK] Python: "))[len("[OK] Python: "):]
+    assert Path(py).samefile(good_home / "venv" / "Scripts" / "python.exe")
+    assert not Path(py).samefile(sys.executable)
+    assert f"[OK] 仮想環境: {good_home / 'venv'}" in lines  # 置き場が子プロセスへ渡っている
 
 
 @pytest.mark.slow
 def test_環境変数の置き場だけでも実行できる(good_home):
     r = run_entry("doctor", env={"SLIDE_MAKER_HOME": str(good_home)})
     assert r.returncode == 0, text(r.stderr)
-    assert json.loads(text(r.stdout))["venv"] == str(good_home / "venv")
+    assert f"[OK] 仮想環境: {good_home / 'venv'}" in text(r.stdout).splitlines()
 
 
 @pytest.mark.slow
@@ -170,7 +170,7 @@ def test_環境変数の置き場は_data_より優先される(good_home, tmp_p
     other = tmp_path / "other"
     r = run_entry("--data", str(other), "doctor", env={"SLIDE_MAKER_HOME": str(good_home)})
     assert r.returncode == 0, text(r.stderr)
-    assert json.loads(text(r.stdout))["venv"] == str(good_home / "venv")
+    assert f"[OK] 仮想環境: {good_home / 'venv'}" in text(r.stdout).splitlines()
     assert not other.exists()
 
 

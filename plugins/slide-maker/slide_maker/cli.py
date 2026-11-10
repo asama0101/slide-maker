@@ -41,30 +41,35 @@ def _ensure_derived(work: Path) -> None:
         lifecycle.ensure_derived(work)
 
 
-def cmd_doctor(args) -> int:
-    out = {
-        "version": __version__,
-        "python": {"path": sys.executable},
-        "venv": str(paths.venv_dir()),
-        "font_biz_udp_gothic": _font_installed(),
-    }
-    warnings = []
-    if not out["font_biz_udp_gothic"]:
-        warnings.append(
-            "BIZ UDPゴシックが未導入です。計測は代替フォントで行うため、折り返しが PowerPoint とずれる場合があります。"
-        )
+def doctor_lines() -> list[str]:
+    """doctor の出力。1 行 1 項目（`[OK]`・`[任意]`・`[情報]`）、対処は次の行に `→`。"""
+    lines = [f"[OK] Python: {sys.executable}", f"[OK] 仮想環境: {paths.venv_dir()}"]
     upd = update_check.check(__version__, paths.SKILL_DIR)
-    if upd is not None:
-        out["update"] = upd
-        if "error" in upd:
-            warnings.append(upd["error"])
-        elif not upd["up_to_date"]:
-            warnings.append(
-                f"新しい版 {upd['latest']} があります（今は {__version__}）。"
-                "`/plugin marketplace update slide-maker` のあと、プラグインを更新してください。"
-            )
-    out["warnings"] = warnings
-    print(json.dumps(out, ensure_ascii=False, indent=2))
+    if upd is None:
+        lines.append(
+            f"[情報] 版: v{__version__}（GitHub のマーケットプレイスに登録していないため、最新かは確認しません）"
+        )
+    elif "error" in upd:
+        lines.append(f"[情報] 版: v{__version__}（{upd['error']}）")
+    elif upd["up_to_date"]:
+        lines.append(f"[情報] 版: v{__version__}（最新です）")
+    else:
+        lines += [
+            f"[情報] 版: v{__version__}（GitHub に v{upd['latest']} があります）",
+            "  → `/plugin marketplace update slide-maker` を実行し、プラグインを更新して Claude Code を再起動する",
+        ]
+    if _font_installed():
+        lines.append("[OK] BIZ UDPゴシック: 導入済み")
+    else:
+        lines += [
+            "[任意] BIZ UDPゴシック: 未導入（計測は代替フォントで行うため、PowerPoint で折り返しがずれる場合がある）",
+            "  → BIZ UDPゴシックを導入する（使わなくても動く）",
+        ]
+    return lines
+
+
+def cmd_doctor(args) -> int:
+    print("\n".join(doctor_lines()))
     return 0
 
 
