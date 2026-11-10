@@ -397,7 +397,9 @@ def test_doctor_は専用_venv_の置き場と実行中の_python_のパスを�
     monkeypatch.setenv("SLIDE_MAKER_HOME", str(tmp_path))
     assert cli.main(["doctor"]) == 0
     lines = capsys.readouterr().out.splitlines()
-    assert f"[OK] 仮想環境: {tmp_path / 'venv'}" in lines
-    assert f"[OK] Python: {sys.executable}" in lines
+    assert any(x.startswith(f"[OK] 仮想環境: {tmp_path / 'venv'}") for x in lines)
+    assert any(x.startswith("[OK] 実行環境: Python ") and sys.executable in x for x in lines)
+    assert f"[OK] 保存先: {tmp_path}（書き込めます）" in lines
+    assert lines[0] == "[OK] OS: Windows"
     font = [x for x in lines if "BIZ UDPゴシック" in x][0]
     assert font.startswith("[OK]" if cli._font_installed() else "[任意]")  # フォントがなければ任意の項目として出る

@@ -4,7 +4,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from . import __version__, paths, update_check
+from . import __version__, env, paths
 from .review_page import CAPABILITIES
 
 
@@ -42,22 +42,9 @@ def _ensure_derived(work: Path) -> None:
 
 
 def doctor_lines() -> list[str]:
-    """doctor の出力。1 行 1 項目（`[OK]`・`[任意]`・`[情報]`）、対処は次の行に `→`。"""
-    lines = [f"[OK] Python: {sys.executable}", f"[OK] 仮想環境: {paths.venv_dir()}"]
-    upd = update_check.check(__version__, paths.SKILL_DIR)
-    if upd is None:
-        lines.append(
-            f"[情報] 版: v{__version__}（GitHub のマーケットプレイスに登録していないため、最新かは確認しません）"
-        )
-    elif "error" in upd:
-        lines.append(f"[情報] 版: v{__version__}（{upd['error']}）")
-    elif upd["up_to_date"]:
-        lines.append(f"[情報] 版: v{__version__}（最新です）")
-    else:
-        lines += [
-            f"[情報] 版: v{__version__}（GitHub に v{upd['latest']} があります）",
-            "  → `/plugin marketplace update slide-maker` を実行し、プラグインを更新して Claude Code を再起動する",
-        ]
+    """doctor の出力。標準項目（OS・実行環境・保存先）、固有の依存、版の順。対処は次の行に `→`。"""
+    lines = env.lead_lines(full=False)
+    lines.append(f"[OK] 仮想環境: {paths.venv_dir()}（ライブラリ・chromium を含む）")
     if _font_installed():
         lines.append("[OK] BIZ UDPゴシック: 導入済み")
     else:
@@ -65,12 +52,13 @@ def doctor_lines() -> list[str]:
             "[任意] BIZ UDPゴシック: 未導入（計測は代替フォントで行うため、PowerPoint で折り返しがずれる場合がある）",
             "  → BIZ UDPゴシックを導入する（使わなくても動く）",
         ]
-    return lines
+    return lines + env.version_lines()
 
 
 def cmd_doctor(args) -> int:
-    print("\n".join(doctor_lines()))
-    return 0
+    lines = doctor_lines()
+    print("\n".join(lines))
+    return 3 if any(x.startswith("[NG]") for x in lines) else 0
 
 
 def cmd_init(args) -> int:

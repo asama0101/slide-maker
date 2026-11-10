@@ -74,4 +74,4 @@ def test_空白と日本語を含む置き場でも_doctor_が動く(tmp_path):
     make_venv(home, with_deps=True)
     r = run_entry("--data", str(home), "doctor", cwd=tmp_path)
     assert r.returncode == 0, text(r.stderr)
-    assert f"[OK] 仮想環境: {home / 'venv'}" in text(r.stdout).splitlines()
+    assert f"[OK] 仮想環境: {home / 'venv'}" in text(r.stdout)
