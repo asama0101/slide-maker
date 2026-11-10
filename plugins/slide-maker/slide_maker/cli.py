@@ -4,7 +4,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-from . import __version__, paths, update_check
+from . import __version__, env, paths
 from .review_page import CAPABILITIES
 
 
@@ -41,31 +41,24 @@ def _ensure_derived(work: Path) -> None:
         lifecycle.ensure_derived(work)
 
 
+def doctor_lines() -> list[str]:
+    """doctor の出力。標準項目（OS・実行環境・保存先）、固有の依存、版の順。対処は次の行に `→`。"""
+    lines = env.lead_lines(full=False)
+    lines.append(f"[OK] 仮想環境: {paths.venv_dir()}（ライブラリ・chromium を含む）")
+    if _font_installed():
+        lines.append("[OK] BIZ UDPゴシック: 導入済み")
+    else:
+        lines += [
+            "[任意] BIZ UDPゴシック: 未導入（計測は代替フォントで行うため、PowerPoint で折り返しがずれる場合がある）",
+            "  → BIZ UDPゴシックを導入する（使わなくても動く）",
+        ]
+    return lines + env.version_lines()
+
+
 def cmd_doctor(args) -> int:
-    out = {
-        "version": __version__,
-        "python": {"path": sys.executable},
-        "venv": str(paths.venv_dir()),
-        "font_biz_udp_gothic": _font_installed(),
-    }
-    warnings = []
-    if not out["font_biz_udp_gothic"]:
-        warnings.append(
-            "BIZ UDPゴシックが未導入です。計測は代替フォントで行うため、折り返しが PowerPoint とずれる場合があります。"
-        )
-    upd = update_check.check(__version__, paths.SKILL_DIR)
-    if upd is not None:
-        out["update"] = upd
-        if "error" in upd:
-            warnings.append(upd["error"])
-        elif not upd["up_to_date"]:
-            warnings.append(
-                f"新しい版 {upd['latest']} があります（今は {__version__}）。"
-                "`/plugin marketplace update slide-maker` のあと、プラグインを更新してください。"
-            )
-    out["warnings"] = warnings
-    print(json.dumps(out, ensure_ascii=False, indent=2))
-    return 0
+    lines = doctor_lines()
+    print("\n".join(lines))
+    return 3 if any(x.startswith("[NG]") for x in lines) else 0
 
 
 def cmd_init(args) -> int:

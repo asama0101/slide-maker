@@ -6,8 +6,8 @@ run.py は実際に子プロセスとして起動する。専用 venv は tmp_pa
 
 # ruff: noqa: S101  # pytest の assert
 import importlib.util
-import json
 import os
+import re
 import subprocess
 import sys
 import sysconfig
@@ -152,17 +152,18 @@ def test_環境変数の置き場が不正なら何もせず終了コード2(val
 def test_システムの_python_ではなく専用_venv_の_python_で_slide_maker_を実行する(good_home):
     r = run_entry("--data", str(good_home), "doctor")
     assert r.returncode == 0, text(r.stderr)
-    out = json.loads(text(r.stdout))
-    assert Path(out["python"]["path"]).samefile(good_home / "venv" / "Scripts" / "python.exe")
-    assert not Path(out["python"]["path"]).samefile(sys.executable)
-    assert out["venv"] == str(good_home / "venv")  # 置き場が子プロセスへ渡っている
+    lines = text(r.stdout).splitlines()
+    py = re.search(r"実行中: (.+)）", next(x for x in lines if x.startswith("[OK] 実行環境: "))).group(1)
+    assert Path(py).samefile(good_home / "venv" / "Scripts" / "python.exe")
+    assert not Path(py).samefile(sys.executable)
+    assert any(x.startswith(f"[OK] 仮想環境: {good_home / 'venv'}") for x in lines)  # 置き場が子プロセスへ渡っている
 
 
 @pytest.mark.slow
 def test_環境変数の置き場だけでも実行できる(good_home):
     r = run_entry("doctor", env={"SLIDE_MAKER_HOME": str(good_home)})
     assert r.returncode == 0, text(r.stderr)
-    assert json.loads(text(r.stdout))["venv"] == str(good_home / "venv")
+    assert f"[OK] 仮想環境: {good_home / 'venv'}" in text(r.stdout)
 
 
 @pytest.mark.slow
@@ -170,7 +171,7 @@ def test_環境変数の置き場は_data_より優先される(good_home, tmp_p
     other = tmp_path / "other"
     r = run_entry("--data", str(other), "doctor", env={"SLIDE_MAKER_HOME": str(good_home)})
     assert r.returncode == 0, text(r.stderr)
-    assert json.loads(text(r.stdout))["venv"] == str(good_home / "venv")
+    assert f"[OK] 仮想環境: {good_home / 'venv'}" in text(r.stdout)
     assert not other.exists()
 
 
@@ -276,7 +277,7 @@ def test_doctor_は項目ごとの_OK_NG_と対処法を出す(tmp_path):
     r = run_entry("--data", str(home), "doctor")
     out = text(r.stdout)
     assert r.returncode == 3
-    assert "[OK] 作成元の Python" in out
+    assert "[OK] 実行環境: Python" in out
     assert "[NG] 仮想環境: ありません" in out
     assert "対処" in out
     assert "setup --yes" in out

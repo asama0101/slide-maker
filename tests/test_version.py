@@ -36,4 +36,4 @@ def test_version_フラグは終了コード0で_plugin_json_の版を表示す�
 def test_doctor_は_plugin_json_の版を報告する(pkg, tmp_path, manifest_version):
     r = _run_cli(pkg, tmp_path / "home", "doctor")
     assert r.returncode == 0
-    assert json.loads(r.stdout)["version"] == manifest_version
+    assert any(x.startswith(f"[情報] 版: v{manifest_version}") for x in r.stdout.splitlines())

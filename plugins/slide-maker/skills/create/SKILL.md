@@ -14,7 +14,7 @@ allowed-tools: 'Bash(python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUG
 ## 0. 初回だけ（環境）
 
 1. `python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" doctor`。終了コード 3 は専用の仮想環境がない・足りない（理由が出る）。利用者に「`${CLAUDE_PLUGIN_DATA}` の下に専用の仮想環境と chromium（数百 MB）を入れてよいか」を確かめる（作成元は venv と ensurepip のある Python 3.10 以上）。
-2. 承認後に `python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" setup --yes`。`doctor` の `venv` と `warnings`（BIZ UDPゴシック未導入など）を伝える。
+2. 承認後に `python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}" setup --yes`。`doctor` の出力のうち、`[NG]` と `[任意]`（BIZ UDPゴシック未導入など）の行を伝える。
 
 ## 1. 受け取る
 

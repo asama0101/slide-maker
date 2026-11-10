@@ -219,17 +219,61 @@ def venv_healthy() -> bool:
         return False
 
 
+def _writable(path: Path) -> bool:
+    """path か、存在する最も近い親が書き込めるか（置き場は setup まで作らない）。"""
+    p = path
+    while not p.exists() and p != p.parent:
+        p = p.parent
+    return p.is_dir() and os.access(p, os.W_OK)
+
+
+def lead_lines(full: bool) -> list[str]:
+    """doctor の先頭の標準項目: OS・実行環境・保存先。full は、venv を作れるかまで調べる（作成元の Python のとき）。"""
+    out = []
+    if sys.platform == "win32":
+        out.append("[OK] OS: Windows")
+    else:
+        out += [f"[NG] OS: {sys.platform}（Windows 専用です）", "  → Windows で使う"]
+    py = f"Python {sys.version_info[0]}.{sys.version_info[1]}"
+    want = f"{MIN_PYTHON[0]}.{MIN_PYTHON[1]}"
+    problems = base_python_problems() if full else []
+    if not full and tuple(sys.version_info[:2]) < MIN_PYTHON:
+        problems = [f"{want} 以上が必要です"]
+    if problems:
+        out += [f"[NG] 実行環境: {py}（{p}）" for p in problems]
+        out.append(f"  → Python {want} 以上（venv と ensurepip 付き）を入れて、そちらで run.py を実行する")
+    else:
+        note = f"{want} 以上が必要" if full else f"{want} 以上が必要。実行中: {sys.executable}"
+        out.append(f"[OK] 実行環境: {py}（{note}）")
+    home = paths.home_dir()
+    if _writable(home):
+        out.append(f"[OK] 保存先: {home}（書き込めます）")
+    else:
+        out += [f"[NG] 保存先: {home}（書き込めません）", "  → 置き場（--data）に、書き込めるフォルダを指定する"]
+    return out
+
+
+def version_lines() -> list[str]:
+    """doctor の末尾の標準項目: 版。GitHub をマーケットプレイスに登録していれば、最新かも示す。"""
+    from . import __version__, update_check
+
+    upd = update_check.check(__version__, paths.SKILL_DIR)
+    if upd is None:
+        return [f"[情報] 版: v{__version__}（GitHub のマーケットプレイスに登録していないため、最新かは確認しません）"]
+    if "error" in upd:
+        return [f"[情報] 版: v{__version__}（{upd['error']}）"]
+    if upd["up_to_date"]:
+        return [f"[情報] 版: v{__version__}（最新です）"]
+    return [
+        f"[情報] 版: v{__version__}（GitHub に v{upd['latest']} があります）",
+        "  → `/plugin marketplace update slide-maker` を実行し、プラグインを更新して Claude Code を再起動する",
+    ]
+
+
 def diagnosis(sel: Selection) -> list[str]:
     """doctor が出す、項目ごとの OK/NG と対処法。何も変更しない。"""
-    out = []
-    base = base_python_problems()
-    if base:
-        out += [f"[NG] 作成元の Python: {p}" for p in base]
-        want = f"{MIN_PYTHON[0]}.{MIN_PYTHON[1]}"
-        out.append(f"     対処: Python {want} 以上（venv と ensurepip 付き）を入れて、そちらで run.py を実行する")
-    else:
-        out.append(f"[OK] 作成元の Python {sys.version_info[0]}.{sys.version_info[1]}")
-    fix = "     対処（利用者の承認後）: `setup --yes`（専用 venv を作って導入）"
+    out = lead_lines(full=True)
+    fix = "  → 利用者の承認後に `setup --yes`（専用 venv を作って導入）を実行する"
     if not paths.venv_python().exists():
         out += ["[NG] 仮想環境: ありません", fix]
     elif not venv_healthy():
@@ -238,7 +282,7 @@ def diagnosis(sel: Selection) -> list[str]:
         out += [f"[NG] 仮想環境: {m}" for m in sel.missing] + [fix]
     else:
         out.append("[OK] 仮想環境・ライブラリ・chromium")
-    return out
+    return out + version_lines()
 
 
 def _install(py: str) -> int:

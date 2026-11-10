@@ -196,9 +196,17 @@ PPTX を作るとき（`build`）に、次を調べる。1 件でもあると PP
 
 専用の環境を作った元の Python が、削除または移動されている。導入を承認すると、環境が作り直される。
 
-### 「[NG] 作成元の Python」
+### 「[NG] 実行環境」
 
 `python` コマンドの Python が、3.10 未満、または `venv`・`ensurepip` を使えない。Python 3.10 以上（`venv` と `ensurepip` 付き）を入れ直し、そちらが `python` になるようにして、もう一度実行する。
+
+### 「[NG] OS」
+
+Windows 以外で実行している。slide-maker は Windows 専用なので、Windows で使う。
+
+### 「[NG] 保存先」
+
+専用の環境の置き場（`~/.claude/plugins/data/slide-maker-<マーケットプレイス名>/`）に書き込めない。フォルダの書き込み権限（読み取り専用でないか）を確かめる。
 
 ### 「既に存在します」（終了コード 4）
 
