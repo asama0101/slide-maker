@@ -5,7 +5,7 @@ import json
 import re
 
 import pytest
-from pptx_deck import check, initdir, measure, paths, template
+from slide_maker import check, initdir, measure, paths, template
 
 from tests._measure import model_of
 
@@ -97,7 +97,7 @@ def test_部品の全断片を測って_textLost_が0件(pkg, tmp_path):
         if m:
             secs.append((f.relative_to(comp).as_posix(), m.group(0)))
     assert len(secs) == 16
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base, template_path=None, force=False, footer=None)
     work = paths.resolve_work(base)
     info = template.TemplateInfo.from_dict(json.loads((work / "template.json").read_text(encoding="utf-8"))["info"])

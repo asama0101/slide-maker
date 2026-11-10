@@ -6,8 +6,8 @@ import os
 import subprocess
 import sys
 
-import pptx_deck
 import pytest
+import slide_maker
 
 
 @pytest.fixture
@@ -17,15 +17,15 @@ def manifest_version(pkg) -> str:
 
 
 def _run_cli(pkg, home, *args):
-    """入口を実際に子プロセスで起動する。環境変数 PPTX_DECK_HOME は tmp_path の下を指す。"""
-    env = {**os.environ, "PPTX_DECK_HOME": str(home), "PYTHONUTF8": "1"}
+    """入口を実際に子プロセスで起動する。環境変数 SLIDE_MAKER_HOME は tmp_path の下を指す。"""
+    env = {**os.environ, "SLIDE_MAKER_HOME": str(home), "PYTHONUTF8": "1"}
     return subprocess.run(  # noqa: S603  # 自分の入口を sys.executable で起動する（外部入力なし）
-        [sys.executable, "-m", "pptx_deck", *args], cwd=pkg, capture_output=True, text=True, encoding="utf-8", env=env
+        [sys.executable, "-m", "slide_maker", *args], cwd=pkg, capture_output=True, text=True, encoding="utf-8", env=env
     )
 
 
 def test_コードの版は_plugin_json_と一致する(manifest_version):
-    assert pptx_deck.__version__ == manifest_version
+    assert slide_maker.__version__ == manifest_version
 
 
 def test_version_フラグは終了コード0で_plugin_json_の版を表示する(pkg, tmp_path, manifest_version):

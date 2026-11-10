@@ -1,4 +1,4 @@
-"""全テスト共通のフィクスチャ。pptx_deck の import 経路は pyproject.toml の pythonpath で通す。"""
+"""全テスト共通のフィクスチャ。slide_maker の import 経路は pyproject.toml の pythonpath で通す。"""
 
 from pathlib import Path
 
@@ -28,5 +28,5 @@ def pytest_collection_modifyitems(items):
 
 @pytest.fixture
 def deck_base(tmp_path) -> Path:
-    """成果物の作業フォルダ（<出力先>/pptx-deck-source/<成果物名>）。resolve_work(deck_base) はそのまま返る。"""
-    return tmp_path / "out" / "pptx-deck-source" / "deck"
+    """成果物の作業フォルダ（<出力先>/slide-maker-source/<成果物名>）。resolve_work(deck_base) はそのまま返る。"""
+    return tmp_path / "out" / "slide-maker-source" / "deck"

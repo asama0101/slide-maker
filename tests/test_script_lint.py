@@ -4,7 +4,7 @@
 from pathlib import Path
 
 import pytest
-from pptx_deck import script_lint
+from slide_maker import script_lint
 
 HEAD = "導入により月次の集計作業が半分に縮むため、来期の人員計画を見直す必要がある"
 

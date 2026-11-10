@@ -1,4 +1,4 @@
-"""入口 run.py: --data / PPTX_DECK_HOME の解釈、専用 venv の Python での実行、案内と終了コード。
+"""入口 run.py: --data / SLIDE_MAKER_HOME の解釈、専用 venv の Python での実行、案内と終了コード。
 
 run.py は実際に子プロセスとして起動する。専用 venv は tmp_path の下に本物の venv を作り、
 実行中の環境の site-packages を .pth で見せて「そろっている venv」にする（空のままなら「不足している venv」）。
@@ -50,8 +50,8 @@ def good_home(tmp_path) -> Path:
 
 
 def run_entry(*argv, env=None, cwd=None, drop_utf8=False):
-    """python run.py <argv> を子プロセスで実行する。PPTX_DECK_HOME は env で渡したときだけ設定する。"""
-    drop = {"PPTX_DECK_HOME"} | ({"PYTHONUTF8", "PYTHONIOENCODING"} if drop_utf8 else set())
+    """python run.py <argv> を子プロセスで実行する。SLIDE_MAKER_HOME は env で渡したときだけ設定する。"""
+    drop = {"SLIDE_MAKER_HOME"} | ({"PYTHONUTF8", "PYTHONIOENCODING"} if drop_utf8 else set())
     e = {**{k: v for k, v in os.environ.items() if k not in drop}, **(env or {})}
     return subprocess.run(  # noqa: S603  # 自分の入口を sys.executable で起動する（外部入力なし）
         [sys.executable, str(RUN_PY), *argv], capture_output=True, env=e, cwd=cwd
@@ -138,9 +138,9 @@ def test_不正な_data_の_setup_は何も作らず終了コード2(tmp_path):
 
 @pytest.mark.parametrize("value", ["rel/dir", "${X}"], ids=["相対パス", "未置換"])
 def test_環境変数の置き場が不正なら何もせず終了コード2(value, tmp_path):
-    r = run_entry("--data", str(tmp_path / "d"), "doctor", env={"PPTX_DECK_HOME": value}, cwd=tmp_path)
+    r = run_entry("--data", str(tmp_path / "d"), "doctor", env={"SLIDE_MAKER_HOME": value}, cwd=tmp_path)
     assert r.returncode == 2
-    assert "PPTX_DECK_HOME" in text(r.stderr)
+    assert "SLIDE_MAKER_HOME" in text(r.stderr)
     assert text(r.stdout) == ""
     assert not (tmp_path / "d").exists()
 
@@ -149,7 +149,7 @@ def test_環境変数の置き場が不正なら何もせず終了コード2(val
 
 
 @pytest.mark.slow
-def test_システムの_python_ではなく専用_venv_の_python_で_pptx_deck_を実行する(good_home):
+def test_システムの_python_ではなく専用_venv_の_python_で_slide_maker_を実行する(good_home):
     r = run_entry("--data", str(good_home), "doctor")
     assert r.returncode == 0, text(r.stderr)
     out = json.loads(text(r.stdout))
@@ -160,7 +160,7 @@ def test_システムの_python_ではなく専用_venv_の_python_で_pptx_deck
 
 @pytest.mark.slow
 def test_環境変数の置き場だけでも実行できる(good_home):
-    r = run_entry("doctor", env={"PPTX_DECK_HOME": str(good_home)})
+    r = run_entry("doctor", env={"SLIDE_MAKER_HOME": str(good_home)})
     assert r.returncode == 0, text(r.stderr)
     assert json.loads(text(r.stdout))["venv"] == str(good_home / "venv")
 
@@ -168,7 +168,7 @@ def test_環境変数の置き場だけでも実行できる(good_home):
 @pytest.mark.slow
 def test_環境変数の置き場は_data_より優先される(good_home, tmp_path):
     other = tmp_path / "other"
-    r = run_entry("--data", str(other), "doctor", env={"PPTX_DECK_HOME": str(good_home)})
+    r = run_entry("--data", str(other), "doctor", env={"SLIDE_MAKER_HOME": str(good_home)})
     assert r.returncode == 0, text(r.stderr)
     assert json.loads(text(r.stdout))["venv"] == str(good_home / "venv")
     assert not other.exists()
@@ -183,7 +183,7 @@ def test_子プロセスの終了コードを返し_端末の文字コードに�
 
 @pytest.mark.slow
 def test_先頭以外の_data_はサブコマンドへ渡り_argparse_が拒否する(good_home):
-    r = run_entry("doctor", "--data", "C:/d", env={"PPTX_DECK_HOME": str(good_home)})
+    r = run_entry("doctor", "--data", "C:/d", env={"SLIDE_MAKER_HOME": str(good_home)})
     assert r.returncode == 2
     assert "unrecognized arguments: --data C:/d" in text(r.stderr)
 
@@ -256,7 +256,7 @@ def test_承認なしの_setup_は子プロセスに渡さず案内だけして�
 
 @pytest.mark.slow
 def test_yes_付きの_setup_は_venv_を作らずに_pip_と_chromium_の導入へ進む(run, good_home, pkg, monkeypatch, capsys):
-    monkeypatch.setenv("PPTX_DECK_HOME", str(good_home))  # run.main が環境変数を書き換えるので、あとで元に戻す
+    monkeypatch.setenv("SLIDE_MAKER_HOME", str(good_home))  # run.main が環境変数を書き換えるので、あとで元に戻す
     commands = []
     monkeypatch.setattr(run.subprocess, "call", lambda cmd, *a, **k: commands.append(list(cmd)) or 0)
     rc = run.main(["--data", str(good_home), "setup", "--yes"])

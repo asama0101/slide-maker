@@ -6,7 +6,7 @@ import zipfile
 
 import pytest
 from pptx import Presentation
-from pptx_deck import build, svgids, template
+from slide_maker import build, svgids, template
 
 from tests._measure import model_of
 from tests._paths import PKG

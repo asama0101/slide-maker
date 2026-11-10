@@ -1,9 +1,9 @@
-"""入口。標準ライブラリのみ。専用の仮想環境の Python で pptx_deck を実行する。
+"""入口。標準ライブラリのみ。専用の仮想環境の Python で slide_maker を実行する。
 
   python run.py [--data <パス>] setup [--yes]   # 仮想環境の作成（--yes は利用者の承認後）
   python run.py [--data <パス>] <サブコマンド>   # それ以外は専用の仮想環境の Python に渡す
 
-置き場（<パス>\\venv に仮想環境を作る）は、環境変数 PPTX_DECK_HOME（優先）か、
+置き場（<パス>\\venv に仮想環境を作る）は、環境変数 SLIDE_MAKER_HOME（優先）か、
 先頭の --data（SKILL.md が渡す ${CLAUDE_PLUGIN_DATA}）。
 どちらもなければ終了コード 3。
 --data の値が不正（未置換の ${ を含む・絶対パスでない・値がない）なら、何もせず終了コード 2。
@@ -24,7 +24,7 @@ if sys.version_info < (3, 10):  # noqa: UP036  # 古い Python で起動され�
 SKILL = Path(__file__).resolve().parent
 sys.path.insert(0, str(SKILL))
 
-from pptx_deck import env, paths  # noqa: E402  標準ライブラリのみで動く
+from slide_maker import env, paths  # noqa: E402  標準ライブラリのみで動く
 
 _ENTRY = 'python "${CLAUDE_PLUGIN_ROOT}/run.py" --data "${CLAUDE_PLUGIN_DATA}"'
 
@@ -72,10 +72,10 @@ def main(argv: list[str]) -> int:
     except ValueError as e:
         print(f"エラー: {e}", file=sys.stderr)
         return 2
-    home = os.environ.get("PPTX_DECK_HOME") or data  # 環境変数（テスト・特殊な環境用）が優先
+    home = os.environ.get("SLIDE_MAKER_HOME") or data  # 環境変数（テスト・特殊な環境用）が優先
     if home and home != data:
         try:
-            check_data(home, "PPTX_DECK_HOME")
+            check_data(home, "SLIDE_MAKER_HOME")
         except ValueError as e:
             print(f"エラー: {e}", file=sys.stderr)
             return 2
@@ -83,7 +83,7 @@ def main(argv: list[str]) -> int:
         print("専用の仮想環境の置き場が指定されていません。")
         print(
             f"SKILL.md のコマンドは `{_ENTRY} <サブコマンド>` の形で実行してください"
-            "（直接実行するときは、環境変数 PPTX_DECK_HOME か `--data <絶対パス>`）。"
+            "（直接実行するときは、環境変数 SLIDE_MAKER_HOME か `--data <絶対パス>`）。"
         )
         print(
             "仮想環境がまだなければ、利用者に「置き場の下の venv に仮想環境と chromium（数百 MB）を"
@@ -91,7 +91,7 @@ def main(argv: list[str]) -> int:
             "作成元の Python は 3.10 以上で、venv と ensurepip が使えるものにしてください。"
         )
         return 3
-    os.environ["PPTX_DECK_HOME"] = home  # paths.home_dir() と子プロセスが読む
+    os.environ["SLIDE_MAKER_HOME"] = home  # paths.home_dir() と子プロセスが読む
     if rest[:1] == ["setup"]:
         return env.setup(yes="--yes" in rest)
     sel = env.select_python(refresh=rest[:1] == ["doctor"])  # doctor は実際に調べ直し、キャッシュも更新する
@@ -109,7 +109,7 @@ def main(argv: list[str]) -> int:
         if note:
             print(note)
         return 3
-    return subprocess.call([str(sel.path), "-m", "pptx_deck", *rest], env=child_env(os.environ))  # noqa: S603  # 引数は配列、実行ファイルは選んだ Python
+    return subprocess.call([str(sel.path), "-m", "slide_maker", *rest], env=child_env(os.environ))  # noqa: S603  # 引数は配列、実行ファイルは選んだ Python
 
 
 if __name__ == "__main__":

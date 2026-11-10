@@ -3,7 +3,7 @@
 案の選択と承認の書き込み、標準のコメント欄（comments）の呼び出し。"""
 
 import pytest
-from pptx_deck import initdir, paths, review_page
+from slide_maker import initdir, paths, review_page
 
 from tests._paths import PKG
 
@@ -60,7 +60,7 @@ EVIL_TEXT = "&lt;img src=x onerror=&quot;window.__xss=1&quot;&gt;&lt;b id=&quot;
 
 
 def _open(p, tmp_path, init_script, slides):
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(base)
     work = paths.resolve_work(base)
     # 表紙の色が違うテンプレートの代わり。この規則は文書の <style> からは shadow の中に届かない

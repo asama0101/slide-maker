@@ -3,7 +3,7 @@
 
 # ruff: noqa: S101  # pytest の assert
 import pytest
-from pptx_deck import charts, check, cli, paths, template
+from slide_maker import charts, check, cli, paths, template
 
 REMOVED = {
     "contrast",
@@ -103,7 +103,7 @@ def test_invalid_chart_spec_stops_with_message():
 
 
 def test_existing_pptx_requires_force(tmp_path, capsys):
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     assert cli.main(["init", str(base)]) == 0
     work = paths.resolve_work(base)
     (work / "final.html").write_text("<!doctype html><html><body></body></html>", encoding="utf-8")

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 from pptx import Presentation
-from pptx_deck import cli, paths, template
+from slide_maker import cli, paths, template
 
 from tests._flow import finalize_all, write_slide
 
@@ -139,7 +139,7 @@ def test_describeは表紙と本文と裏表紙だけの対応表を返す(tpl):
 
 @pytest.mark.slow
 def test_PPTXは表紙と本文と裏表紙のレイアウトだけで作られる(tmp_path, capsys, pkg, tpl):
-    base = tmp_path / "out" / "pptx-deck-source" / "demo"
+    base = tmp_path / "out" / "slide-maker-source" / "demo"
     rc, out, err = run(capsys, "init", str(base), "--template", str(tpl))
     assert rc == 0, err
     assert "layout_map" in out
@@ -153,7 +153,7 @@ def test_PPTXは表紙と本文と裏表紙のレイアウトだけで作られ�
 
 
 def test_template_mapは廃止された(tmp_path, capsys, tpl):
-    base = tmp_path / "out" / "pptx-deck-source" / "demo"
+    base = tmp_path / "out" / "slide-maker-source" / "demo"
     assert run(capsys, "init", str(base), "--template", str(tpl))[0] == 0
     with pytest.raises(SystemExit):
         cli.main(["template-map", str(base)])
@@ -189,7 +189,7 @@ def test_存在しないかpptxでないテンプレートは終了コード2で
 
 @pytest.mark.parametrize("cmd", ["build", "review-page", "finalize", "check"])
 def test_template_jsonがなければ終了コード2で案内する(tmp_path, capsys, cmd):
-    deck = tmp_path / "out" / "pptx-deck-source" / "empty"
+    deck = tmp_path / "out" / "slide-maker-source" / "empty"
     deck.mkdir(parents=True)
     (deck / "final.html").write_text("<html></html>", encoding="utf-8")
     target = str(deck / "final.html") if cmd == "check" else str(deck)
@@ -223,7 +223,7 @@ def test_accent_colorsはテーマのaccent1とaccent2を返す(tmp_path):
 
 def test_build_uses_template_accent_when_design_has_no_colors(tmp_path, capsys, pkg):
     tpl = _green_template(tmp_path)
-    base = tmp_path / "out" / "pptx-deck-source" / "demo"
+    base = tmp_path / "out" / "slide-maker-source" / "demo"
     assert run(capsys, "init", str(base), "--template", str(tpl))[0] == 0
     capsys.readouterr()
     work = paths.resolve_work(base)
@@ -241,7 +241,7 @@ def test_build_uses_template_accent_when_design_has_no_colors(tmp_path, capsys, 
 
 
 def test_divider_スライドは本文レイアウトで作る(tmp_path, capsys, tpl, pkg):
-    base = tmp_path / "out" / "pptx-deck-source" / "demo"
+    base = tmp_path / "out" / "slide-maker-source" / "demo"
     assert run(capsys, "init", str(base), "--template", str(tpl))[0] == 0
     capsys.readouterr()
     assert template.layout_index(template.analyze(tpl), {"layout": "divider"}) == 1

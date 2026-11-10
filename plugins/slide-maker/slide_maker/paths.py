@@ -61,10 +61,12 @@ def filename_problem(name: str) -> str | None:
 
 
 def home_dir() -> Path:
-    """専用の仮想環境などの置き場。run.py が `--data`（${CLAUDE_PLUGIN_DATA}）を PPTX_DECK_HOME に入れて渡す。"""
-    home = os.environ.get("PPTX_DECK_HOME")
+    """専用の仮想環境などの置き場。run.py が `--data`（${CLAUDE_PLUGIN_DATA}）を SLIDE_MAKER_HOME に入れて渡す。"""
+    home = os.environ.get("SLIDE_MAKER_HOME")
     if not home:
-        raise RuntimeError("専用環境の置き場が未指定です（環境変数 PPTX_DECK_HOME か、run.py の --data で指定します）")
+        raise RuntimeError(
+            "専用環境の置き場が未指定です（環境変数 SLIDE_MAKER_HOME か、run.py の --data で指定します）"
+        )
     return Path(home)
 
 
@@ -84,7 +86,7 @@ def templates_dir() -> Path:
 def temp_key(name: str, work=None) -> str:
     """一時フォルダの名前。work（作業フォルダ）を渡すと、絶対パスのハッシュを足し、同名の別の成果物と混ざらないようにする。"""
     if not name.strip() or name.strip() in (".", "..") or "/" in name or "\\" in name:
-        raise ValueError(f"一時フォルダの名前が不正です: {name!r}")  # clean が %TEMP%\pptx-deck 全体を消さないように
+        raise ValueError(f"一時フォルダの名前が不正です: {name!r}")  # clean が %TEMP%\slide-maker 全体を消さないように
     if work is None:
         return name
     return f"{name}-{hashlib.sha1(str(Path(work).resolve()).encode('utf-8'), usedforsecurity=False).hexdigest()[:8]}"
@@ -92,12 +94,12 @@ def temp_key(name: str, work=None) -> str:
 
 def temp_dir(name: str, work=None) -> Path:
     """OS の一時フォルダ配下の作業場所（確認用 PNG など一過性のもの）。work を渡すと作業フォルダごとに分ける。"""
-    d = Path(tempfile.gettempdir()) / "pptx-deck" / temp_key(name, work)
+    d = Path(tempfile.gettempdir()) / "slide-maker" / temp_key(name, work)
     d.mkdir(parents=True, exist_ok=True)
     return d
 
 
-SOURCE_PARENT = "pptx-deck-source"
+SOURCE_PARENT = "slide-maker-source"
 
 
 class LayoutError(ValueError):
@@ -105,8 +107,8 @@ class LayoutError(ValueError):
 
 
 def resolve_work(arg: str | Path) -> Path:
-    """コマンドの引数を、作業フォルダ（<出力先>/pptx-deck-source/<成果物名>）に解決する。
-    .pptx のパスを渡すと、その隣の pptx-deck-source/<成果物名> にする。"""
+    """コマンドの引数を、作業フォルダ（<出力先>/slide-maker-source/<成果物名>）に解決する。
+    .pptx のパスを渡すと、その隣の slide-maker-source/<成果物名> にする。"""
     arg = Path(arg)
     is_pptx = arg.suffix.lower() == ".pptx"
     if is_pptx and (arg.parent / "source" / "template.json").is_file():
@@ -127,7 +129,7 @@ def resolve_work(arg: str | Path) -> Path:
 
 
 def deck_dir(work: Path) -> Path:
-    """出力先（PPTX・HTML を置く、pptx-deck-source の親）。"""
+    """出力先（PPTX・HTML を置く、slide-maker-source の親）。"""
     return Path(work).parent.parent
 
 

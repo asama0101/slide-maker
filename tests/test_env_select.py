@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 
 import pytest
-from pptx_deck import cli, env
+from slide_maker import cli, env
 
 PKG = Path(__file__).resolve().parent.parent / "plugins" / "slide-maker"
 
@@ -102,7 +102,7 @@ class FakeCommands:
 @pytest.fixture
 def home(tmp_path, monkeypatch) -> Path:
     h = tmp_path / "home"
-    monkeypatch.setenv("PPTX_DECK_HOME", str(h))
+    monkeypatch.setenv("SLIDE_MAKER_HOME", str(h))
     return h
 
 
@@ -334,7 +334,7 @@ def commands_run(monkeypatch) -> list:
 @pytest.fixture
 def spaced_home(tmp_path, monkeypatch) -> Path:
     h = tmp_path / "home 日本語"  # 空白・日本語を含む置き場でも動く
-    monkeypatch.setenv("PPTX_DECK_HOME", str(h))
+    monkeypatch.setenv("SLIDE_MAKER_HOME", str(h))
     return h
 
 
@@ -394,7 +394,7 @@ def test_python_が3_10_未満なら問題として報告する(monkeypatch):
 
 
 def test_doctor_は専用_venv_の置き場と実行中の_python_のパスを出す(tmp_path, monkeypatch, capsys):
-    monkeypatch.setenv("PPTX_DECK_HOME", str(tmp_path))
+    monkeypatch.setenv("SLIDE_MAKER_HOME", str(tmp_path))
     assert cli.main(["doctor"]) == 0
     out = json.loads(capsys.readouterr().out)
     assert out["venv"] == str(tmp_path / "venv")

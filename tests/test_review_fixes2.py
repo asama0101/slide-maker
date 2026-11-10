@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 from pptx import Presentation
 from pptx.util import Emu
-from pptx_deck import build, charts, lifecycle, paths, template
+from slide_maker import build, charts, lifecycle, paths, template
 
 
 def _spec(**kw):
@@ -65,7 +65,7 @@ def test_大きさ0の角丸図形でも_ゼロ除算にならない():
 # ---- 7: clean は一時フォルダを作って消すだけ ----
 def test_clean_temp_は消したパスを返し_フォルダは残らない(tmp_path, monkeypatch):
     monkeypatch.setattr(paths.tempfile, "gettempdir", lambda: str(tmp_path))
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     d = paths.temp_dir("deck", work)
     (d / "x.png").write_bytes(b"x")
     r = lifecycle.clean_temp("deck", work)

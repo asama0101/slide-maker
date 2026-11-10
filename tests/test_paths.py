@@ -3,7 +3,7 @@ import sys
 import tempfile
 
 import pytest
-from pptx_deck import cli, paths
+from slide_maker import cli, paths
 
 
 @pytest.fixture
@@ -15,25 +15,25 @@ def temp_root(tmp_path, monkeypatch):
     return root
 
 
-def test_プラグイン本体に入口と_pptx_deck_パッケージがある(pkg):
+def test_プラグイン本体に入口と_slide_maker_パッケージがある(pkg):
     assert (pkg / "run.py").is_file()
-    assert (pkg / "pptx_deck" / "cli.py").is_file()
+    assert (pkg / "slide_maker" / "cli.py").is_file()
 
 
-def test_home_dir_は環境変数_PPTX_DECK_HOME_を返す(monkeypatch):
-    monkeypatch.setenv("PPTX_DECK_HOME", r"C:\x\home")
+def test_home_dir_は環境変数_SLIDE_MAKER_HOME_を返す(monkeypatch):
+    monkeypatch.setenv("SLIDE_MAKER_HOME", r"C:\x\home")
     assert str(paths.home_dir()) == r"C:\x\home"
 
 
 def test_環境変数がないと_home_dir_は_RuntimeError_で止まり_LOCALAPPDATA_へ戻らない(monkeypatch, tmp_path):
-    monkeypatch.delenv("PPTX_DECK_HOME", raising=False)
+    monkeypatch.delenv("SLIDE_MAKER_HOME", raising=False)
     monkeypatch.setenv("LOCALAPPDATA", str(tmp_path))  # フォールバックしないことを確かめるため残す
-    with pytest.raises(RuntimeError, match="PPTX_DECK_HOME"):
+    with pytest.raises(RuntimeError, match="SLIDE_MAKER_HOME"):
         paths.home_dir()
 
 
 def test_venv_の_python_は置き場の下の_venv_Scripts_python_exe(monkeypatch):
-    monkeypatch.setenv("PPTX_DECK_HOME", r"C:\x\home")
+    monkeypatch.setenv("SLIDE_MAKER_HOME", r"C:\x\home")
     assert str(paths.venv_python()) == r"C:\x\home\venv\Scripts\python.exe"
 
 
@@ -49,12 +49,12 @@ def test_不正な名前の一時フォルダは_ValueError_で拒否される(b
 
 
 def test_clean_は空の成果物名なら終了コード2で止まり何も消さない(temp_root, tmp_path, capsys):
-    (temp_root / "pptx-deck").mkdir()
-    (temp_root / "pptx-deck" / "keep.txt").write_text("x", encoding="utf-8")
+    (temp_root / "slide-maker").mkdir()
+    (temp_root / "slide-maker" / "keep.txt").write_text("x", encoding="utf-8")
     rc = cli.main(["clean", tmp_path.anchor])  # ドライブ直下は成果物名が空になる
     assert rc == 2
     assert "エラー" in capsys.readouterr().err
-    assert (temp_root / "pptx-deck" / "keep.txt").read_text(encoding="utf-8") == "x"
+    assert (temp_root / "slide-maker" / "keep.txt").read_text(encoding="utf-8") == "x"
 
 
 def test_build_は空の成果物名なら終了コード2で止まり測定しない(deck_base, monkeypatch, capsys, temp_root):
@@ -72,12 +72,12 @@ def test_build_は空の成果物名なら終了コード2で止まり測定し�
 
 
 def test_pptx_のパスから元データのフォルダを決める(tmp_path):
-    expected = (tmp_path / "out" / "pptx-deck-source" / "a").resolve()
+    expected = (tmp_path / "out" / "slide-maker-source" / "a").resolve()
     assert paths.resolve_work(tmp_path / "out" / "a.pptx") == expected
 
 
 def test_作業フォルダのパスはそのまま返り_deck_dir_は出力先_deck_name_は成果物名(tmp_path):
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     resolved = paths.resolve_work(work)
     assert resolved == work.resolve()
     assert paths.deck_dir(resolved) == (tmp_path / "out").resolve()
@@ -97,8 +97,8 @@ def test_旧配置のパスは未対応のエラーになる_source_を渡した
         paths.resolve_work(tmp_path / "demo" / "source")
 
 
-def test_pptx_deck_source_の外のパスは_LayoutError(tmp_path):
-    with pytest.raises(paths.LayoutError, match="pptx-deck-source"):
+def test_slide_maker_source_の外のパスは_LayoutError(tmp_path):
+    with pytest.raises(paths.LayoutError, match="slide-maker-source"):
         paths.resolve_work(tmp_path / "x")
 
 

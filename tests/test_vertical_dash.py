@@ -4,7 +4,7 @@
 import pytest
 from lxml import etree
 from pptx import Presentation
-from pptx_deck import build, template
+from slide_maker import build, template
 
 from tests._measure import model_of
 

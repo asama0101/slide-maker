@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 import pytest
-from pptx_deck import candidates
+from slide_maker import candidates
 
 
 def _put(work: Path, *names: str, body: str = "<div>x</div>") -> Path:

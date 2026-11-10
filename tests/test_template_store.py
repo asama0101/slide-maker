@@ -11,13 +11,13 @@ from pathlib import Path
 
 import pytest
 from pptx import Presentation
-from pptx_deck import cli
+from slide_maker import cli
 
 
 @pytest.fixture
 def home(tmp_path, monkeypatch) -> Path:
     h = tmp_path / "home"
-    monkeypatch.setenv("PPTX_DECK_HOME", str(h))
+    monkeypatch.setenv("SLIDE_MAKER_HOME", str(h))
     return h
 
 
@@ -149,7 +149,7 @@ def test_登録したテンプレートのパスを_init_に渡して成果物�
     shutil.copy(pkg / "assets" / "template" / "standard.potx", tmp_path / "社内.potx")
     run(capsys, "template-import", str(tmp_path / "社内.potx"))
     path = json.loads(run(capsys, "template-list")[1])[0]["path"]
-    work = tmp_path / "out" / "pptx-deck-source" / "資料"
+    work = tmp_path / "out" / "slide-maker-source" / "資料"
     rc, _, err = run(capsys, "init", str(work), "--template", path)
     assert rc == 0, err
     assert (work / "_template" / "template.potx").is_file()

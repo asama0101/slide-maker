@@ -70,11 +70,11 @@ Claude Code の `/plugin` から行う。
 
 | 項目 | アンインストール後 |
 |---|---|
-| 専用の環境と登録したテンプレート（`~/.claude/plugins/data/slide-maker-<マーケットプレイス名>/`） | 通常は消える。`PPTX_DECK_HOME` を設定していたときは残る |
-| 作った成果物（出力先の `<成果物名>.pptx` と `pptx-deck-source/`） | 残る |
+| 専用の環境と登録したテンプレート（`~/.claude/plugins/data/slide-maker-<マーケットプレイス名>/`） | 通常は消える。`SLIDE_MAKER_HOME` を設定していたときは残る |
+| 作った成果物（出力先の `<成果物名>.pptx` と `slide-maker-source/`） | 残る |
 | 案の選択の Artifact（claude.ai） | 残る。不要なら claude.ai で消す |
 | Chromium（ほかのツールと共有する場所） | 残る |
-| 確認用の画像（`%TEMP%\pptx-deck\`） | 残ることがある |
+| 確認用の画像（`%TEMP%\slide-maker\`） | 残ることがある |
 
 ## 使い方
 
@@ -97,7 +97,7 @@ Claude Code で `/slide-maker:create` を実行するか、「稟議資料を作
 ```
 <出力先>/
   <成果物名>.pptx             成果物
-  pptx-deck-source/
+  slide-maker-source/
     <成果物名>/               設計図・原稿・スライドの案・テンプレートのコピー
 ```
 
@@ -162,7 +162,7 @@ Claude Code で打つコマンドは、次の 3 つ。打たずに、文章で�
 | 題・リードの文字 | 既定は題 37px・リード 27px・BIZ UDPゴシック・左寄せ。変えるときは、元データの `rules.json`（`{"title": {"size_px", "align"}, "lead": {…}}`）に書く。`size_px` は theme.css の `--fs-title`・`--fs-lead` に反映され、`align` は検査だけ（断片で指定する）。フォントは BIZ UDPゴシック固定（`font` を書くとエラー） |
 | フッター | 左下に入れる文言（コピーライトなど）。作成の最初に伝える |
 | テンプレート | 16:9 の `.potx`・`.pptx`。`/slide-maker:template` で登録しておくと、作成時に名前で選べる |
-| `PPTX_DECK_HOME` | 専用の環境とテンプレートの置き場を指定する環境変数。通常は不要 |
+| `SLIDE_MAKER_HOME` | 専用の環境とテンプレートの置き場を指定する環境変数。通常は不要 |
 
 ## 検査
 

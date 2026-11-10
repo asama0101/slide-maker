@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 from pptx import Presentation
-from pptx_deck import cli, paths
+from slide_maker import cli, paths
 
 from tests._flow import finalize_all, write_slide
 
@@ -25,7 +25,7 @@ PKG = Path(__file__).resolve().parent.parent / "plugins" / "slide-maker"
 def pristine_deck(tmp_path_factory) -> Path:
     """init → 選択結果 → finalize まで進めた成果物（final.html つき）。
     どのテストも変更しない（コピーして使う）。"""
-    base = tmp_path_factory.mktemp("pristine") / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path_factory.mktemp("pristine") / "out" / "slide-maker-source" / "deck"
     assert cli.main(["init", str(base)]) == 0
     work = paths.resolve_work(base)
     cover = (PKG / "assets" / "components" / "layouts" / "cover.html").read_text(encoding="utf-8")
@@ -38,7 +38,7 @@ def pristine_deck(tmp_path_factory) -> Path:
 @pytest.fixture
 def work(pristine_deck, tmp_path) -> Path:
     """final.html まで進んだ成果物（作業フォルダ）。テストごとのコピー。"""
-    base = tmp_path / "out" / "pptx-deck-source" / "deck"
+    base = tmp_path / "out" / "slide-maker-source" / "deck"
     shutil.copytree(pristine_deck, base)
     return paths.resolve_work(base)
 
@@ -171,7 +171,7 @@ def test_書き込み確認は無い出力先を作らず親フォルダだけ�
 
 def test_保存に失敗しても前のPPTXを壊さない(tmp_path, monkeypatch):
     from pptx.presentation import Presentation as Prs
-    from pptx_deck import build, paths, template, theme
+    from slide_maker import build, paths, template, theme
 
     std = paths.ASSETS / "template" / "standard.potx"
     out = tmp_path / "deck.pptx"

@@ -4,7 +4,7 @@
 import json
 
 import pytest
-from pptx_deck import cli, finalize, initdir, paths
+from slide_maker import cli, finalize, initdir, paths
 
 
 def _slides(work, **frags):
@@ -27,7 +27,7 @@ def _choice(base, nn, pick="R1", status="approved", comment=""):
 
 @pytest.fixture
 def work(tmp_path):
-    base = tmp_path / "out" / "pptx-deck-source" / "demo"
+    base = tmp_path / "out" / "slide-maker-source" / "demo"
     initdir.init(base)
     w = paths.resolve_work(base)
     _slides(

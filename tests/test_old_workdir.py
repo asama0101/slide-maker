@@ -3,7 +3,7 @@
 traceback を出さず、原因の分かるメッセージで止まるか、古いものを無視する。"""
 
 import pytest
-from pptx_deck import cli, initdir, paths
+from slide_maker import cli, initdir, paths
 
 from tests._flow import write_choices, write_slide
 
@@ -18,7 +18,7 @@ OLD_KEYS = {
 
 @pytest.fixture
 def old_work(tmp_path):
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     initdir.init(work)
     cfg = paths.read_cfg(work)
     cfg.update(OLD_KEYS)

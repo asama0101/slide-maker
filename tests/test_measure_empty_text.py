@@ -2,7 +2,7 @@
 
 # ruff: noqa: S101  # pytest の assert
 import pytest
-from pptx_deck import check, paths, template
+from slide_maker import check, paths, template
 
 from tests._measure import model_of
 

@@ -10,7 +10,7 @@ import re
 import xml.etree.ElementTree as ET
 
 import pytest
-from pptx_deck import paths, svgids
+from slide_maker import paths, svgids
 
 from tests._flow import finalize_all, write_slide
 
@@ -22,7 +22,7 @@ slow = pytest.mark.slow
 @pytest.fixture
 def run(capsys):
     """cli.main を実行して (終了コード, 標準出力, 標準エラー出力) を返す関数。"""
-    from pptx_deck import cli
+    from slide_maker import cli
 
     def _run(*argv):
         capsys.readouterr()
@@ -46,7 +46,7 @@ def sample(pictures):
 @pytest.fixture
 def make_work(tmp_path, run):
     """init → 断片を 01-A に置く → finalize。final.html のある作業フォルダを返す関数（base は tmp_path/demo）。"""
-    base = tmp_path / "out" / "pptx-deck-source" / "demo"
+    base = tmp_path / "out" / "slide-maker-source" / "demo"
 
     def _make(fragment):
         assert run("init", str(base))[0] == 0
@@ -105,7 +105,7 @@ def test_見本はビルドでき_3倍で透過の画像として貼られ_題�
 def test_全見本を1つの資料にビルドすると違反が0件で各スライドに絵が1つある(tmp_path, run, pictures):
     from pptx import Presentation
 
-    base = tmp_path / "out" / "pptx-deck-source" / "demo"
+    base = tmp_path / "out" / "slide-maker-source" / "demo"
     init_with_samples(run, base, pictures, SAMPLE_NAMES)
     rc, out, err = run("build", str(base))
     assert rc == 0, out + err
@@ -137,7 +137,7 @@ def test_利用者の画像を絵の土台にして貼れる(tmp_path, run, pict
         + '<image href="material/screen.png" x="8" y="8" width="720" height="350" preserveAspectRatio="none"/>\n      '
         + frag[b:]
     )
-    base = tmp_path / "out" / "pptx-deck-source" / "demo"
+    base = tmp_path / "out" / "slide-maker-source" / "demo"
     assert run("init", str(base))[0] == 0
     work = paths.resolve_work(base)
     (work / "material").mkdir()
@@ -188,7 +188,7 @@ def test_あとの絵は前に同じid定義の絵があってもアイコンと
     from pptx import Presentation
 
     def picture_png(names, sub):
-        base = tmp_path / sub / "out" / "pptx-deck-source" / "demo"
+        base = tmp_path / sub / "out" / "slide-maker-source" / "demo"
         init_with_samples(run, base, pictures, names)
         rc, out, err = run("build", str(base))
         assert rc == 0, out + err

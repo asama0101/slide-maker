@@ -2,7 +2,7 @@
 
 # ruff: noqa: S101  # pytest の assert
 import pytest
-from pptx_deck import check, paths, rules, template
+from slide_maker import check, paths, rules, template
 
 
 def test_defaults_match_fontsize(tmp_path):
@@ -75,9 +75,9 @@ def test_font_を書くとエラー(tmp_path):
 
 
 def test_size_pxはtheme_cssに反映され検査も通る(tmp_path):
-    from pptx_deck import initdir
+    from slide_maker import initdir
 
-    work = tmp_path / "out" / "pptx-deck-source" / "deck"
+    work = tmp_path / "out" / "slide-maker-source" / "deck"
     work.mkdir(parents=True)
     (work / "rules.json").write_text('{"title": {"size_px": 32}}', encoding="utf-8")
     initdir.init(work, force=True)
