@@ -96,8 +96,12 @@ def main(argv: list[str]) -> int:
         return env.setup(yes="--yes" in rest)
     sel = env.select_python(refresh=rest[:1] == ["doctor"])  # doctor は実際に調べ直し、キャッシュも更新する
     if sel.path is None:
-        if rest[:1] == ["doctor"]:
+        if rest[:1] == ["doctor"]:  # doctor は、項目の行と対処の行だけを出す（案内は対処の行に含まれる）
             print("\n".join(env.diagnosis(sel)))
+            note = _legacy_note()
+            if note:
+                print(note)
+            return 3
         print("実行できる専用の仮想環境がありません。")
         print(f"- 仮想環境（{paths.venv_dir()}）: " + "、".join(sel.missing))
         print(
