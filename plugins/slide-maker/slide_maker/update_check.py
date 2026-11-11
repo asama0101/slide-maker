@@ -51,5 +51,5 @@ def check(current: str, plugin_root: Path) -> dict | None:
         with urlopen(url, timeout=TIMEOUT) as r:  # noqa: S310  # https 固定の URL
             latest = str(json.load(r)["version"])
     except (OSError, ValueError, KeyError) as e:  # URLError は OSError の子
-        return {"repo": repo, "error": f"最新版を取得できませんでした（{e}）"}
+        return {"repo": repo, "error": f"最新のバージョンを確認できませんでした: {e}"}
     return {"repo": repo, "latest": latest, "up_to_date": _ver(current) >= _ver(latest)}

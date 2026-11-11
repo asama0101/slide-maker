@@ -264,12 +264,17 @@ def version_lines() -> list[str]:
             "（GitHub のマーケットプレイスに登録していないため、最新かは確認しません）"
         ]
     if "error" in upd:
-        return [f"[情報] プラグインのバージョン: v{__version__}（{upd['error']}）"]
+        return [
+            f"[情報] プラグインのバージョン: v{__version__}（{upd['error']}）",
+            "  → ネットワークにつながっているか、github.com への通信を止めていないかを確認する",
+        ]
     if upd["up_to_date"]:
         return [f"[情報] プラグインのバージョン: v{__version__}（最新です）"]
     return [
         f"[情報] プラグインのバージョン: v{__version__}（GitHub に v{upd['latest']} があります）",
-        "  → `/plugin marketplace update slide-maker` を実行し、プラグインを更新して Claude Code を再起動する",
+        "  → /plugin marketplace update slide-maker を実行する",
+        "  → /plugin update slide-maker@slide-maker を実行する",
+        "  → Claude Code を開き直す",
     ]
 
 
