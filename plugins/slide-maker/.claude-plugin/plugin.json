@@ -1,6 +1,6 @@
 {
   "name": "slide-maker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "素材から、PowerPoint で直せる承認文書の PPTX をコンサルテイストで作る。スライドの案を非公開の Artifact に並べて選び、コメントで直してから PPTX にする。型に当てはまらない図は SVG の絵にして貼り、登録したテンプレートの上にも作れる。Windows 専用。",
   "author": {
     "name": "slide-maker contributors"
